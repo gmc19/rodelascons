@@ -138,11 +138,3 @@ html {
   background-color: #003366;
   color: white;
 }
-
-/* Enhanced text shadow for better visibility on transparent backgrounds */
-.text-shadow {
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 
-               0 0 7px rgba(0, 0, 0, 0.5),
-               0 0 10px rgba(0, 0, 0, 0.3);
-}
-

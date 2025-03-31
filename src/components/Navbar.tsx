@@ -35,23 +35,10 @@ const Navbar = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-between items-center">
           <NavLink to="/" className="flex items-center">
-            <div className={cn(
-              "flex flex-col items-start",
-              isScrolled ? "bg-white" : "bg-transparent"
-            )}>
-              <span className={cn(
-                "text-rcs-blue font-montserrat font-bold text-2xl md:text-3xl drop-shadow-md",
-                isScrolled ? "" : "text-shadow"
-              )}>
-                RCS
-              </span>
-              <span className={cn(
-                "text-rcs-gold font-montserrat font-medium text-xs md:text-sm drop-shadow-md",
-                isScrolled ? "" : "text-shadow"
-              )}>
-                Rodelas Construction Services
-              </span>
-            </div>
+            <span className="text-rcs-blue font-montserrat font-bold text-2xl">RCS</span>
+            <span className="ml-2 text-rcs-gold font-montserrat font-medium hidden sm:inline">
+              Rodelas Construction Services
+            </span>
           </NavLink>
 
           {/* Desktop Navigation */}
@@ -60,12 +47,8 @@ const Navbar = () => {
               to="/"
               className={({ isActive }) =>
                 cn(
-                  'font-montserrat font-bold text-lg transition-colors duration-200 drop-shadow-md',
-                  isActive 
-                    ? 'text-rcs-gold' 
-                    : isScrolled 
-                      ? 'text-rcs-blue hover:text-rcs-gold' 
-                      : 'text-white hover:text-rcs-gold text-shadow'
+                  'font-montserrat font-medium transition-colors duration-200',
+                  isActive ? 'text-rcs-gold' : 'text-rcs-blue hover:text-rcs-gold'
                 )
               }
             >
@@ -75,12 +58,8 @@ const Navbar = () => {
               to="/services"
               className={({ isActive }) =>
                 cn(
-                  'font-montserrat font-bold text-lg transition-colors duration-200 drop-shadow-md',
-                  isActive 
-                    ? 'text-rcs-gold' 
-                    : isScrolled 
-                      ? 'text-rcs-blue hover:text-rcs-gold' 
-                      : 'text-white hover:text-rcs-gold text-shadow'
+                  'font-montserrat font-medium transition-colors duration-200',
+                  isActive ? 'text-rcs-gold' : 'text-rcs-blue hover:text-rcs-gold'
                 )
               }
             >
@@ -90,12 +69,8 @@ const Navbar = () => {
               to="/projects"
               className={({ isActive }) =>
                 cn(
-                  'font-montserrat font-bold text-lg transition-colors duration-200 drop-shadow-md',
-                  isActive 
-                    ? 'text-rcs-gold' 
-                    : isScrolled 
-                      ? 'text-rcs-blue hover:text-rcs-gold' 
-                      : 'text-white hover:text-rcs-gold text-shadow'
+                  'font-montserrat font-medium transition-colors duration-200',
+                  isActive ? 'text-rcs-gold' : 'text-rcs-blue hover:text-rcs-gold'
                 )
               }
             >
@@ -105,12 +80,8 @@ const Navbar = () => {
               to="/contact"
               className={({ isActive }) =>
                 cn(
-                  'font-montserrat font-bold text-lg transition-colors duration-200 drop-shadow-md',
-                  isActive 
-                    ? 'text-rcs-gold' 
-                    : isScrolled 
-                      ? 'text-rcs-blue hover:text-rcs-gold' 
-                      : 'text-white hover:text-rcs-gold text-shadow'
+                  'font-montserrat font-medium transition-colors duration-200',
+                  isActive ? 'text-rcs-gold' : 'text-rcs-blue hover:text-rcs-gold'
                 )
               }
             >
@@ -119,11 +90,8 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <button className={cn(
-            "md:hidden",
-            isScrolled ? "text-rcs-blue" : "text-white"
-          )} onClick={toggleMenu}>
-            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          <button className="md:hidden text-rcs-blue" onClick={toggleMenu}>
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
@@ -135,7 +103,7 @@ const Navbar = () => {
                 to="/"
                 className={({ isActive }) =>
                   cn(
-                    'font-montserrat font-bold py-2 transition-colors duration-200 text-lg',
+                    'font-montserrat font-medium py-2 transition-colors duration-200',
                     isActive ? 'text-rcs-gold' : 'text-rcs-blue hover:text-rcs-gold'
                   )
                 }
@@ -147,7 +115,7 @@ const Navbar = () => {
                 to="/services"
                 className={({ isActive }) =>
                   cn(
-                    'font-montserrat font-bold py-2 transition-colors duration-200 text-lg',
+                    'font-montserrat font-medium py-2 transition-colors duration-200',
                     isActive ? 'text-rcs-gold' : 'text-rcs-blue hover:text-rcs-gold'
                   )
                 }
@@ -159,7 +127,7 @@ const Navbar = () => {
                 to="/projects"
                 className={({ isActive }) =>
                   cn(
-                    'font-montserrat font-bold py-2 transition-colors duration-200 text-lg',
+                    'font-montserrat font-medium py-2 transition-colors duration-200',
                     isActive ? 'text-rcs-gold' : 'text-rcs-blue hover:text-rcs-gold'
                   )
                 }
@@ -171,7 +139,7 @@ const Navbar = () => {
                 to="/contact"
                 className={({ isActive }) =>
                   cn(
-                    'font-montserrat font-bold py-2 transition-colors duration-200 text-lg',
+                    'font-montserrat font-medium py-2 transition-colors duration-200',
                     isActive ? 'text-rcs-gold' : 'text-rcs-blue hover:text-rcs-gold'
                   )
                 }
