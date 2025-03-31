@@ -27,7 +27,7 @@ const AboutUsSection = () => {
           <div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
             <div className="relative">
               <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80" alt="Rodelas Construction Team" className="rounded-lg shadow-xl z-10 relative" />
-              <div className="absolute -bottom-6 -right-6 bg-rcs-gold p-6 shadow-lg rounded-lg px-50 px-[240px] py-[185px]">
+              <div className="absolute -bottom-6 -right-6 bg-rcs-gold p-6 shadow-lg px-50 px-[89px] mx-[9px] rounded-lg py-[76px] my-[9px]">
                 <div className="text-rcs-blue font-montserrat">
                   <div className="text-4xl font-bold">13+</div>
                   <div className="font-medium">Years of Excellence</div>
