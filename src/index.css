@@ -128,3 +128,14 @@ html {
   50% { transform: translateY(-10px); }
   100% { transform: translateY(0px); }
 }
+
+/* New styles for the Services page */
+.shadow-text {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.service-category-tabs .active-tab {
+  background-color: #003366;
+  color: white;
+}
+
