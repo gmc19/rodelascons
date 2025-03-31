@@ -28,23 +28,25 @@ const HeroSection = () => {
       <div className="relative h-full flex items-center">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl" style={{ opacity: isVisible ? 1 : 0, transition: 'opacity 1s ease-out' }}>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-tight shadow-text">
-              Building Tomorrow's Landmarks Today
-            </h1>
-            <p className="text-xl md:text-2xl text-white font-medium mb-10 shadow-text">
+            <div className="mb-6 inline-block bg-rcs-blue/50 backdrop-blur-sm p-3 rounded-lg transform -rotate-1 border-l-4 border-rcs-gold">
+              <h1 className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white leading-tight shadow-text">
+                Building Tomorrow's Landmarks Today
+              </h1>
+            </div>
+            <p className="text-2xl md:text-3xl text-white font-bold mb-10 shadow-text bg-rcs-blue/30 backdrop-blur-sm p-3 inline-block">
               Rodelas Construction Services - Excellence in construction, renovation, and engineering since 2010.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 to="/services"
-                className="bg-rcs-gold text-rcs-blue font-montserrat font-bold px-8 py-4 rounded-md hover:bg-yellow-400 transition-colors duration-300 inline-flex items-center justify-center text-lg"
+                className="bg-rcs-gold text-rcs-blue font-montserrat font-bold px-8 py-4 rounded-md hover:bg-yellow-400 transition-colors duration-300 inline-flex items-center justify-center text-xl shadow-lg"
               >
                 Our Services
-                <ArrowRight size={20} className="ml-2" />
+                <ArrowRight size={24} className="ml-2" />
               </Link>
               <Link
                 to="/contact"
-                className="bg-white text-rcs-blue font-montserrat font-bold px-8 py-4 rounded-md hover:bg-gray-100 transition-colors duration-300 inline-flex items-center justify-center text-lg"
+                className="bg-white text-rcs-blue font-montserrat font-bold px-8 py-4 rounded-md hover:bg-gray-100 transition-colors duration-300 inline-flex items-center justify-center text-xl shadow-lg"
               >
                 Get a Quote
               </Link>
