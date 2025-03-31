@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react';
 import Layout from '../components/Layout';
-import { Building, Home, PenTool, BarChart3, Tool, Ruler, HardHat, Truck } from 'lucide-react';
+import { Building, Home, PenTool, BarChart3, Wrench, Ruler, HardHat, Truck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface ServiceProps {
@@ -91,7 +91,7 @@ const Services = () => {
       ]
     },
     {
-      icon: <Tool size={32} />,
+      icon: <Wrench size={32} />,
       title: "General Contracting",
       description: "Comprehensive general contracting services with a focus on quality craftsmanship and attention to detail.",
       features: [
