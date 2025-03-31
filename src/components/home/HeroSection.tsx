@@ -28,23 +28,23 @@ const HeroSection = () => {
       <div className="relative h-full flex items-center">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl" style={{ opacity: isVisible ? 1 : 0, transition: 'opacity 1s ease-out' }}>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-tight shadow-text">
               Building Tomorrow's Landmarks Today
             </h1>
-            <p className="text-xl text-white/90 mb-8">
+            <p className="text-xl md:text-2xl text-white font-medium mb-10 shadow-text">
               Rodelas Construction Services - Excellence in construction, renovation, and engineering since 2010.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 to="/services"
-                className="bg-rcs-gold text-rcs-blue font-montserrat font-semibold px-8 py-3 rounded-md hover:bg-yellow-400 transition-colors duration-300 inline-flex items-center justify-center"
+                className="bg-rcs-gold text-rcs-blue font-montserrat font-bold px-8 py-4 rounded-md hover:bg-yellow-400 transition-colors duration-300 inline-flex items-center justify-center text-lg"
               >
                 Our Services
-                <ArrowRight size={18} className="ml-2" />
+                <ArrowRight size={20} className="ml-2" />
               </Link>
               <Link
                 to="/contact"
-                className="bg-white text-rcs-blue font-montserrat font-semibold px-8 py-3 rounded-md hover:bg-gray-100 transition-colors duration-300 inline-flex items-center justify-center"
+                className="bg-white text-rcs-blue font-montserrat font-bold px-8 py-4 rounded-md hover:bg-gray-100 transition-colors duration-300 inline-flex items-center justify-center text-lg"
               >
                 Get a Quote
               </Link>

@@ -1,7 +1,7 @@
-
 import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
-import { ExternalLink, CalendarDays, MapPin } from 'lucide-react';
+import { CalendarDays, MapPin, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface Project {
   id: string;
@@ -103,8 +103,7 @@ const projects: Project[] = [
 
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [expandedProject, setExpandedProject] = useState<string | null>(null);
 
   const categories = ["All", ...Array.from(new Set(projects.map(project => project.category)))];
 
@@ -115,44 +114,47 @@ const Projects = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     
-    // Check if there's a hash in the URL to open a specific project
+    // Check if there's a hash in the URL to expand a specific project
     const hash = window.location.hash.substring(1);
     if (hash) {
-      const project = projects.find(p => p.id === hash);
-      if (project) {
-        setSelectedProject(project);
-        setIsModalOpen(true);
-      }
+      setExpandedProject(hash);
+      // Scroll to the project after a short delay to allow rendering
+      setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 300);
     }
   }, []);
 
-  const openProject = (project: Project) => {
-    setSelectedProject(project);
-    setIsModalOpen(true);
-    // Update URL hash without scrolling
-    window.history.pushState(null, '', `#${project.id}`);
+  const toggleProject = (projectId: string) => {
+    if (expandedProject === projectId) {
+      setExpandedProject(null);
+      // Remove hash from URL
+      window.history.pushState(null, '', window.location.pathname);
+    } else {
+      setExpandedProject(projectId);
+      // Update URL hash without scrolling
+      window.history.pushState(null, '', `#${projectId}`);
+      // Scroll to the project
+      setTimeout(() => {
+        const element = document.getElementById(projectId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 300);
+    }
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedProject(null);
-    // Remove hash from URL
-    window.history.pushState(null, '', window.location.pathname);
-  };
-
-  // Listen for back/forward navigation to handle modal state
+  // Listen for back/forward navigation to handle expanded state
   useEffect(() => {
     const handlePopState = () => {
       const hash = window.location.hash.substring(1);
-      if (!hash) {
-        setIsModalOpen(false);
-        setSelectedProject(null);
+      if (hash) {
+        setExpandedProject(hash);
       } else {
-        const project = projects.find(p => p.id === hash);
-        if (project) {
-          setSelectedProject(project);
-          setIsModalOpen(true);
-        }
+        setExpandedProject(null);
       }
     };
 
@@ -162,11 +164,11 @@ const Projects = () => {
 
   return (
     <Layout>
-      <div className="pt-24 pb-20 bg-rcs-blue/90">
+      <div className="pt-24 pb-20 bg-gradient-to-r from-rcs-blue to-rcs-blue/80">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Our Projects</h1>
-            <p className="text-xl text-white/80">
+            <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-6 shadow-text">Our Projects</h1>
+            <p className="text-xl md:text-2xl text-white/90 font-medium shadow-text">
               Explore our portfolio of successful construction projects that demonstrate our expertise and commitment to excellence.
             </p>
           </div>
@@ -181,10 +183,10 @@ const Projects = () => {
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-4 py-2 rounded-md transition-colors duration-200 ${
+                  className={`px-5 py-3 rounded-md transition-colors duration-200 font-bold text-lg ${
                     selectedCategory === category
-                      ? 'bg-rcs-blue text-white'
-                      : 'bg-white text-rcs-blue hover:bg-gray-100'
+                      ? 'bg-rcs-blue text-white shadow-md'
+                      : 'bg-white text-rcs-blue hover:bg-gray-100 border border-gray-200'
                   }`}
                 >
                   {category}
@@ -193,108 +195,97 @@ const Projects = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="space-y-12 mt-8">
             {filteredProjects.map((project) => (
-              <div
+              <Card
                 key={project.id}
                 id={project.id}
-                className="project-card bg-white rounded-lg overflow-hidden shadow-md cursor-pointer"
-                onClick={() => openProject(project)}
+                className="bg-white rounded-lg overflow-hidden shadow-lg border-0 transition-all duration-300 hover:shadow-xl"
               >
-                <div className="relative h-64">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="project-overlay absolute inset-0 bg-rcs-blue/70 flex items-center justify-center">
-                    <div className="text-center p-4">
-                      <span className="text-rcs-gold text-sm font-medium">{project.category}</span>
-                      <h3 className="text-white text-xl font-bold mt-1">{project.title}</h3>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="relative h-[300px] lg:h-auto">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-rcs-gold text-rcs-blue text-sm font-bold px-3 py-1 rounded-full">
+                        {project.category}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <CardContent className="p-6 lg:p-8 flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-2xl md:text-3xl font-bold text-rcs-blue mb-3">{project.title}</h3>
+                      
+                      <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
+                        <div className="flex items-center">
+                          <MapPin size={16} className="mr-1 text-rcs-gold" />
+                          <span>{project.location}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <CalendarDays size={16} className="mr-1 text-rcs-gold" />
+                          <span>Completed: {project.completionDate}</span>
+                        </div>
+                      </div>
+                      
+                      <p className="text-gray-700 mb-6">
+                        {expandedProject === project.id 
+                          ? project.description 
+                          : `${project.description.substring(0, 150)}...`}
+                      </p>
+                    </div>
+                    
+                    <button
+                      onClick={() => toggleProject(project.id)}
+                      className="text-rcs-blue bg-rcs-gold/20 border border-rcs-gold px-5 py-2 rounded-md hover:bg-rcs-gold hover:text-rcs-blue transition-colors duration-300 font-semibold inline-flex items-center justify-center w-full md:w-auto"
+                    >
+                      {expandedProject === project.id ? (
+                        <>View Less <ArrowLeft size={18} className="ml-2" /></>
+                      ) : (
+                        <>View Details <ArrowRight size={18} className="ml-2" /></>
+                      )}
+                    </button>
+                  </CardContent>
+                </div>
+                
+                {expandedProject === project.id && (
+                  <div className="p-6 pt-0 lg:p-8 lg:pt-0 animate-fade-in">
+                    <hr className="my-6 border-gray-200" />
+                    
+                    <h4 className="text-xl font-bold text-rcs-blue mb-4">Project Gallery</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                      {project.galleryImages.map((image, index) => (
+                        <div key={index} className="overflow-hidden rounded-lg shadow-md">
+                          <img
+                            src={image}
+                            alt={`${project.title} gallery image ${index + 1}`}
+                            className="w-full h-64 object-cover transition-transform duration-500 hover:scale-110"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <h4 className="text-xl font-bold text-rcs-blue mb-4">Project Details</h4>
+                    <p className="text-gray-700 mb-6">{project.description}</p>
+                    
+                    <div className="flex justify-center">
                       <button
-                        className="mt-4 inline-flex items-center text-white bg-rcs-gold/20 backdrop-blur-sm px-4 py-2 rounded-md hover:bg-rcs-gold/40 transition-colors duration-200"
+                        onClick={() => toggleProject(project.id)}
+                        className="text-rcs-blue bg-rcs-gold px-6 py-3 rounded-md hover:bg-yellow-400 transition-colors duration-300 font-semibold inline-flex items-center"
                       >
-                        View Details <ExternalLink size={16} className="ml-2" />
+                        Close Details <ArrowLeft size={18} className="ml-2" />
                       </button>
                     </div>
                   </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-rcs-blue mb-2">{project.title}</h3>
-                  <p className="text-gray-600 line-clamp-2">{project.description}</p>
-                  <div className="mt-4 flex items-center text-sm text-gray-500">
-                    <MapPin size={16} className="mr-1" />
-                    <span>{project.location}</span>
-                  </div>
-                </div>
-              </div>
+                )}
+              </Card>
             ))}
           </div>
         </div>
       </div>
-
-      {/* Project Modal */}
-      {isModalOpen && selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/70" onClick={closeModal}></div>
-          <div className="relative bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <button
-              onClick={closeModal}
-              className="absolute top-4 right-4 bg-white rounded-full p-1 text-gray-500 hover:text-gray-800 focus:outline-none z-10"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-            </button>
-            <div className="p-6">
-              <div className="mb-6">
-                <span className="inline-block bg-rcs-blue text-white text-sm px-3 py-1 rounded-md mb-2">
-                  {selectedProject.category}
-                </span>
-                <h2 className="text-2xl md:text-3xl font-bold text-rcs-blue">{selectedProject.title}</h2>
-                <div className="mt-2 flex flex-wrap gap-4 text-sm text-gray-500">
-                  <div className="flex items-center">
-                    <MapPin size={16} className="mr-1" />
-                    <span>{selectedProject.location}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <CalendarDays size={16} className="mr-1" />
-                    <span>Completed: {selectedProject.completionDate}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mb-6">
-                <img
-                  src={selectedProject.image}
-                  alt={selectedProject.title}
-                  className="w-full h-auto rounded-lg"
-                />
-              </div>
-
-              <div className="mb-6">
-                <h3 className="text-xl font-bold text-rcs-blue mb-2">Project Description</h3>
-                <p className="text-gray-600">{selectedProject.description}</p>
-              </div>
-
-              <div>
-                <h3 className="text-xl font-bold text-rcs-blue mb-4">Project Gallery</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {selectedProject.galleryImages.map((image, index) => (
-                    <img
-                      key={index}
-                      src={image}
-                      alt={`${selectedProject.title} gallery image ${index + 1}`}
-                      className="w-full h-48 object-cover rounded-lg"
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </Layout>
   );
 };

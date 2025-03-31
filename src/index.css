@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -131,11 +131,10 @@ html {
 
 /* New styles for the Services page */
 .shadow-text {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .service-category-tabs .active-tab {
   background-color: #003366;
   color: white;
 }
-
