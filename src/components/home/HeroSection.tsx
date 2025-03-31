@@ -16,7 +16,7 @@ const HeroSection = () => {
         <div className="absolute inset-0 hero-gradient"></div>
       </div>
       
-      <div className="relative h-full flex items-center">
+      <div className="relative h-full flex items-center text-lg">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl" style={{
           opacity: isVisible ? 1 : 0,
