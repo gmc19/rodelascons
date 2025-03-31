@@ -22,7 +22,7 @@ const HeroSection = () => {
           opacity: isVisible ? 1 : 0,
           transition: 'opacity 1s ease-out'
         }}>
-            <h1 className="text-5xl md:text-6xl text-white mb-6 leading-tight shadow-text lg:text-6xl font-bold">
+            <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-6 leading-tight shadow-text lg:text-6xl">
               Building Tomorrow's Landmarks Today
             </h1>
             <p className="text-xl text-white mb-10 shadow-text md:text-2xl font-normal">
