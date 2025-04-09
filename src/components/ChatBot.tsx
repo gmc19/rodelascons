@@ -1,7 +1,7 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, Send, X, Minimize, Maximize, Phone, Mail, MapPin, Info, Calculator } from 'lucide-react';
 import { Button } from './ui/button';
+import { useNavigate } from 'react-router-dom';
 
 interface Message {
   content: string;
@@ -10,6 +10,7 @@ interface Message {
   buttons?: Array<{
     text: string;
     action: string;
+    path?: string;
   }>;
 }
 
@@ -23,15 +24,16 @@ const ChatBot = () => {
       isBot: true, 
       timestamp: new Date(),
       buttons: [
-        { text: "Services", action: "What services do you offer?" },
-        { text: "Contact", action: "How can I contact you?" },
-        { text: "Pricing", action: "Can you tell me about your pricing?" }
+        { text: "Services", action: "What services do you offer?", path: "/services" },
+        { text: "Contact", action: "How can I contact you?", path: "/contact" },
+        { text: "Projects", action: "Show me your projects", path: "/projects" }
       ]
     }
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatBoxRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const apiKey = "AIzaSyBdGQJXvMp4BMLWPpoxCTk2U9iB5phhcz4";
 
@@ -48,12 +50,16 @@ const ChatBot = () => {
     setIsOpen(false);
   };
 
-  const handleButtonClick = (action: string) => {
-    // Add user message showing what button they clicked
+  const handleButtonClick = (action: string, path?: string) => {
     const userMessage = { content: action, isBot: false, timestamp: new Date() };
     setMessages(prev => [...prev, userMessage]);
     
-    // Process the button action
+    if (path) {
+      closeChat();
+      navigate(path);
+      return;
+    }
+    
     handleUserQuery(action);
   };
 
@@ -64,7 +70,8 @@ const ChatBot = () => {
         buttons: [
           { text: "Call Now", action: "I want to call" },
           { text: "Send Email", action: "I want to email" },
-          { text: "View Map", action: "Show me your location" }
+          { text: "View Map", action: "Show me your location" },
+          { text: "Contact Page", action: "Go to contact page", path: "/contact" }
         ]
       };
     }
@@ -74,7 +81,7 @@ const ChatBot = () => {
         content: "Our pricing depends on the project size and specifications. For a basic estimate:\n\n• Residential construction: ₱35,000-₱50,000 per sqm\n• Commercial construction: ₱45,000-₱65,000 per sqm\n• Renovation: ₱15,000-₱30,000 per sqm\n\nWant me to calculate an estimate for you?",
         buttons: [
           { text: "Calculate", action: "I need a price calculation" },
-          { text: "Talk to Sales", action: "I want to talk to someone about pricing" }
+          { text: "Talk to Sales", action: "I want to talk to someone about pricing", path: "/contact" }
         ]
       };
     }
@@ -90,7 +97,30 @@ const ChatBot = () => {
       return {
         content: "Our main office is located at: 123 Builders Avenue, Makati City, Philippines. We're open Monday-Friday, 8am-5pm.",
         buttons: [
-          { text: "Get Directions", action: "I need directions" }
+          { text: "Get Directions", action: "I need directions" },
+          { text: "Contact Us", action: "Go to contact page", path: "/contact" }
+        ]
+      };
+    }
+    
+    if (query.toLowerCase().includes('service') || query.toLowerCase().includes('offer')) {
+      return {
+        content: "At Rodelas Construction Services, we offer various construction services including:\n\n• Commercial Construction\n• Residential Construction\n• Renovation & Remodeling\n• Construction Management\n\nWould you like to know more about any specific service?",
+        buttons: [
+          { text: "View All Services", action: "Go to services page", path: "/services" },
+          { text: "Commercial", action: "Tell me about commercial construction" },
+          { text: "Residential", action: "Tell me about residential construction" }
+        ]
+      };
+    }
+    
+    if (query.toLowerCase().includes('project') || query.toLowerCase().includes('portfolio') || query.toLowerCase().includes('past work')) {
+      return {
+        content: "We have completed numerous successful projects across various categories including commercial buildings, residential complexes, renovations, and more. Would you like to see our project portfolio?",
+        buttons: [
+          { text: "View Projects", action: "Go to projects page", path: "/projects" },
+          { text: "Commercial Projects", action: "Show me your commercial projects", path: "/projects" },
+          { text: "Residential Projects", action: "Show me your residential projects", path: "/projects" }
         ]
       };
     }
@@ -99,7 +129,6 @@ const ChatBot = () => {
   };
   
   const processCalculation = (query: string) => {
-    // Simple regex to extract numbers and project type
     const numberMatch = query.match(/\d+/);
     const sqm = numberMatch ? parseInt(numberMatch[0]) : null;
     
@@ -121,7 +150,6 @@ const ChatBot = () => {
       return null;
     }
     
-    // Adjust for finish quality
     if (query.toLowerCase().includes('premium')) {
       baseRate *= 1.2;
     } else if (query.toLowerCase().includes('basic')) {
@@ -146,10 +174,8 @@ const ChatBot = () => {
   const handleUserQuery = async (userQuery: string) => {
     setIsLoading(true);
 
-    // First check if this is a specific company info request
     const companyInfoResponse = getCompanyInfo(userQuery);
     
-    // Or if it's a calculation request
     const calculationResponse = processCalculation(userQuery);
     
     if (companyInfoResponse || calculationResponse) {
@@ -208,24 +234,22 @@ const ChatBot = () => {
       const data = await response.json();
       
       let botResponse = "I apologize, but I couldn't process your request. Please try again.";
-      let buttons: Array<{text: string, action: string}> = [];
+      let buttons: Array<{text: string, action: string, path?: string}> = [];
       
       if (data.candidates && data.candidates[0] && data.candidates[0].content) {
         botResponse = data.candidates[0].content.parts[0].text;
         
-        // Add relevant buttons based on response content
         if (botResponse.toLowerCase().includes('service')) {
-          buttons.push({ text: "Services Details", action: "Tell me more about your services" });
+          buttons.push({ text: "Services Details", action: "Tell me more about your services", path: "/services" });
         }
         if (botResponse.toLowerCase().includes('contact') || botResponse.toLowerCase().includes('email') || botResponse.toLowerCase().includes('call')) {
-          buttons.push({ text: "Contact Info", action: "How can I contact you?" });
+          buttons.push({ text: "Contact Info", action: "How can I contact you?", path: "/contact" });
         }
         if (botResponse.toLowerCase().includes('project') || botResponse.toLowerCase().includes('portfolio')) {
-          buttons.push({ text: "See Projects", action: "Show me your past projects" });
+          buttons.push({ text: "See Projects", action: "Show me your past projects", path: "/projects" });
         }
       }
 
-      // Add bot message
       setMessages(prev => [...prev, { 
         content: botResponse, 
         isBot: true, 
@@ -234,7 +258,6 @@ const ChatBot = () => {
       }]);
     } catch (error) {
       console.error('Error:', error);
-      // Add error message
       setMessages(prev => [...prev, { 
         content: "I'm having trouble connecting right now. Please try again later or contact us directly.", 
         isBot: true, 
@@ -249,7 +272,6 @@ const ChatBot = () => {
     e.preventDefault();
     if (!message.trim()) return;
 
-    // Add user message
     const userMessage = { content: message, isBot: false, timestamp: new Date() };
     setMessages(prev => [...prev, userMessage]);
     setMessage('');
@@ -265,7 +287,6 @@ const ChatBot = () => {
 
   return (
     <>
-      {/* Chat toggle button */}
       <button
         onClick={toggleChat}
         className={`fixed bottom-20 md:bottom-6 right-6 z-40 bg-rcs-blue text-white rounded-full p-4 shadow-lg hover:bg-blue-800 transition-all duration-300 flex items-center justify-center ${
@@ -276,14 +297,12 @@ const ChatBot = () => {
         <MessageSquare className="h-6 w-6" />
       </button>
 
-      {/* Chat window */}
       <div
         ref={chatBoxRef}
         className={`fixed z-50 bottom-20 md:bottom-6 right-6 bg-white rounded-lg shadow-xl transition-all duration-300 overflow-hidden flex flex-col ${
           isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-0 pointer-events-none'
         } ${isMinimized ? 'h-14' : 'h-[500px]'} w-[350px] max-w-[95vw]`}
       >
-        {/* Chat header */}
         <div className="bg-rcs-blue text-white p-3 flex items-center justify-between">
           <div className="flex items-center">
             <MessageSquare className="h-5 w-5 mr-2" />
@@ -307,7 +326,6 @@ const ChatBot = () => {
           </div>
         </div>
 
-        {/* Chat messages */}
         {!isMinimized && (
           <div className="flex-grow p-4 overflow-y-auto">
             {messages.map((msg, index) => (
@@ -335,7 +353,7 @@ const ChatBot = () => {
                           size="sm"
                           variant="outline"
                           className="bg-white text-rcs-blue border-rcs-blue hover:bg-rcs-blue hover:text-white text-xs py-1 h-auto"
-                          onClick={() => handleButtonClick(btn.action)}
+                          onClick={() => handleButtonClick(btn.action, btn.path)}
                         >
                           {btn.text === "Call Now" && <Phone className="h-3 w-3 mr-1" />}
                           {btn.text === "Send Email" && <Mail className="h-3 w-3 mr-1" />}
@@ -365,7 +383,6 @@ const ChatBot = () => {
           </div>
         )}
 
-        {/* Chat input */}
         {!isMinimized && (
           <form onSubmit={sendMessage} className="border-t border-gray-200 p-3 flex">
             <input
