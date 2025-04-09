@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
 import AboutUsSection from '../components/home/AboutUsSection';
@@ -10,6 +10,10 @@ import TestimonialsSection from '../components/home/TestimonialsSection';
 import CtaSection from '../components/home/CtaSection';
 
 const Index = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Layout>
       <HeroSection />
