@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -56,7 +55,7 @@ export default {
 				// RCS Custom Colors
 				rcs: {
 					blue: '#003366',
-					gold: '#FFD700',
+					gold: '#CC9900',
 					gray: '#E5E5E5',
 					dark: '#1E1E1E',
 					'muted-blue': '#4A90E2',

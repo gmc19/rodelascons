@@ -1,6 +1,4 @@
-
 import React from 'react';
-import Layout from '../components/Layout';
 import HeroSection from '../components/home/HeroSection';
 import AboutUsSection from '../components/home/AboutUsSection';
 import ServicesSection from '../components/home/ServicesSection';
@@ -13,7 +11,7 @@ import CtaSection from '../components/home/CtaSection';
 
 const Index = () => {
   return (
-    <Layout>
+    <>
       <HeroSection />
       <AboutUsSection />
       <ServicesSection />
@@ -23,7 +21,7 @@ const Index = () => {
       <TestimonialsSection />
       <FaqSection />
       <CtaSection />
-    </Layout>
+    </>
   );
 };
 

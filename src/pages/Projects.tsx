@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Layout from '../components/Layout';
 import { CalendarDays, MapPin, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 interface Project {
@@ -126,7 +125,8 @@ const Projects = () => {
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
-  return <Layout>
+  return (
+    <>
       <div className="pt-24 pb-20 bg-gradient-to-r from-rcs-blue to-rcs-blue/80">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center">
@@ -209,6 +209,7 @@ const Projects = () => {
           </div>
         </div>
       </div>
-    </Layout>;
+    </>
+  );
 };
 export default Projects;

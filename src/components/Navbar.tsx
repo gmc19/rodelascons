@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
@@ -28,17 +27,35 @@ const Navbar = () => {
   return (
     <nav
       className={cn(
-        'fixed w-full z-50 transition-all duration-300',
-        isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'
+        'fixed w-full z-[999] transition-all duration-300',
+        isScrolled 
+          ? 'bg-white/100 shadow-lg py-2 backdrop-blur-md' 
+          : 'bg-transparent py-4'
       )}
     >
-      <div className="container mx-auto px-4 md:px-6">
+      <div className={cn(
+        "container mx-auto px-4 md:px-6",
+        isScrolled ? 'text-rcs-blue' : 'text-white'
+      )}>
         <div className="flex justify-between items-center">
           <NavLink to="/" className="flex items-center">
-            <span className="text-rcs-blue font-montserrat font-bold text-2xl">RCS</span>
-            <span className="ml-2 text-rcs-gold font-montserrat font-medium hidden sm:inline">
-              Rodelas Construction Services
-            </span>
+            <img 
+              src="/rcslogo.jpg" 
+              alt="RCS Logo" 
+              className="w-12 h-12 rounded-full object-cover mr-3"
+            />
+            <div className="flex flex-col">
+              <span className={cn(
+                "font-montserrat font-bold text-2xl",
+                isScrolled ? 'text-rcs-blue' : 'text-white'
+              )}>RCS</span>
+              <span className={cn(
+                "font-montserrat font-medium text-sm",
+                isScrolled ? 'text-rcs-gold' : 'text-white'
+              )}>
+                Rodelas Construction Services
+              </span>
+            </div>
           </NavLink>
 
           {/* Desktop Navigation */}
@@ -48,7 +65,11 @@ const Navbar = () => {
               className={({ isActive }) =>
                 cn(
                   'font-montserrat font-medium transition-colors duration-200',
-                  isActive ? 'text-rcs-gold' : 'text-rcs-blue hover:text-rcs-gold'
+                  isActive 
+                    ? 'text-rcs-gold' 
+                    : isScrolled 
+                      ? 'text-rcs-blue hover:text-rcs-gold'
+                      : 'text-white hover:text-rcs-gold'
                 )
               }
             >
@@ -59,7 +80,11 @@ const Navbar = () => {
               className={({ isActive }) =>
                 cn(
                   'font-montserrat font-medium transition-colors duration-200',
-                  isActive ? 'text-rcs-gold' : 'text-rcs-blue hover:text-rcs-gold'
+                  isActive 
+                    ? 'text-rcs-gold' 
+                    : isScrolled 
+                      ? 'text-rcs-blue hover:text-rcs-gold'
+                      : 'text-white hover:text-rcs-gold'
                 )
               }
             >
@@ -70,7 +95,11 @@ const Navbar = () => {
               className={({ isActive }) =>
                 cn(
                   'font-montserrat font-medium transition-colors duration-200',
-                  isActive ? 'text-rcs-gold' : 'text-rcs-blue hover:text-rcs-gold'
+                  isActive 
+                    ? 'text-rcs-gold' 
+                    : isScrolled 
+                      ? 'text-rcs-blue hover:text-rcs-gold'
+                      : 'text-white hover:text-rcs-gold'
                 )
               }
             >
@@ -81,7 +110,11 @@ const Navbar = () => {
               className={({ isActive }) =>
                 cn(
                   'font-montserrat font-medium transition-colors duration-200',
-                  isActive ? 'text-rcs-gold' : 'text-rcs-blue hover:text-rcs-gold'
+                  isActive 
+                    ? 'text-rcs-gold' 
+                    : isScrolled 
+                      ? 'text-rcs-blue hover:text-rcs-gold'
+                      : 'text-white hover:text-rcs-gold'
                 )
               }
             >
@@ -90,7 +123,10 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <button className="md:hidden text-rcs-blue" onClick={toggleMenu}>
+          <button className={cn(
+            "md:hidden",
+            isScrolled ? 'text-rcs-blue' : 'text-white'
+          )} onClick={toggleMenu}>
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>

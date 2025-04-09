@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react';
@@ -88,18 +87,24 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <MapPin size={18} className="mr-2 mt-1 text-rcs-gold" />
-                <span>123 Construction Way, Building City, BC 10101</span>
+                <span>Block 8 Lot 7 Phase 2 Gregory Street, St. Joseph Village, 7 Marinig, Cabuyao, 4025 Laguna</span>
               </li>
               <li className="flex items-center">
                 <Phone size={18} className="mr-2 text-rcs-gold" />
-                <a href="tel:+1234567890" className="hover:text-rcs-gold transition-colors duration-200">
-                  (123) 456-7890
+                <a href="tel:+639670598903" className="hover:text-rcs-gold transition-colors duration-200">
+                  Globe: 09670598903/09951858305
+                </a>
+              </li>
+              <li className="flex items-center">
+                <Phone size={18} className="mr-2 text-rcs-gold" />
+                <a href="tel:+63495470926" className="hover:text-rcs-gold transition-colors duration-200">
+                  Landline: 049-547-0926
                 </a>
               </li>
               <li className="flex items-center">
                 <Mail size={18} className="mr-2 text-rcs-gold" />
-                <a href="mailto:info@rcs.com" className="hover:text-rcs-gold transition-colors duration-200">
-                  info@rcs.com
+                <a href="mailto:engineeringdreams.rcs@gmail.com" className="hover:text-rcs-gold transition-colors duration-200">
+                  engineeringdreams.rcs@gmail.com
                 </a>
               </li>
             </ul>

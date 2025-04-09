@@ -17,10 +17,10 @@ interface TeamMember {
 const teamMembers: TeamMember[] = [
   {
     id: 1,
-    name: "Robert Rodelas",
+    name: "Arnold Rodelas",
     role: "Founder & CEO",
-    bio: "With over 20 years of construction industry experience, Robert leads RCS with a vision for excellence and innovation in every project.",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=500&q=80",
+    bio: "With over 20 years of construction industry experience, Arnold Rodelas leads RCS with a vision for excellence and innovation in every project.",
+    image: "/rodelas.jpg",
     social: {
       linkedin: "https://linkedin.com",
       email: "robert@rcs-construction.com"
@@ -28,16 +28,16 @@ const teamMembers: TeamMember[] = [
   },
   {
     id: 2,
-    name: "Maria Santos",
+    name: "Ace Rodelas",
     role: "Project Manager",
-    bio: "Maria ensures every project is delivered on time and within budget while maintaining the highest quality standards our clients expect.",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=500&q=80",
+    bio: "Ace ensures every project is delivered on time and within budget while maintaining the highest quality standards our clients expect.",
+    image: "/ace.jpg",
     social: {
       linkedin: "https://linkedin.com",
       email: "maria@rcs-construction.com"
     }
   },
-  {
+  { 
     id: 3,
     name: "David Chen",
     role: "Lead Architect",

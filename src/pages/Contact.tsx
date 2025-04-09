@@ -1,6 +1,4 @@
-
 import React, { useEffect, useState } from 'react';
-import Layout from '../components/Layout';
 import { Phone, Mail, MapPin, Send } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
@@ -94,7 +92,7 @@ const Contact = () => {
   };
 
   return (
-    <Layout>
+    <>
       <div className="pt-24 pb-20 bg-rcs-blue/90">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center">
@@ -122,7 +120,8 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-rcs-blue">Phone</h3>
-                    <p className="text-gray-600 mt-1">(123) 456-7890</p>
+                    <p className="text-gray-600 mt-1">Globe: 09670598903/09951858305</p>
+                    <p className="text-gray-600 mt-1">Landline: 049-547-0926</p>
                   </div>
                 </div>
                 
@@ -132,7 +131,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-rcs-blue">Email</h3>
-                    <p className="text-gray-600 mt-1">info@rcs.com</p>
+                    <p className="text-gray-600 mt-1">engineeringdreams.rcs@gmail.com</p>
                   </div>
                 </div>
                 
@@ -143,8 +142,8 @@ const Contact = () => {
                   <div>
                     <h3 className="font-bold text-rcs-blue">Office Location</h3>
                     <p className="text-gray-600 mt-1">
-                      123 Construction Way,<br />
-                      Building City, BC 10101
+                      Block 8 Lot 7 Phase 2 Gregory Street,<br />
+                      St. Joseph Village, 7 Marinig, Cabuyao, 4025 Laguna
                     </p>
                   </div>
                 </div>
@@ -282,7 +281,7 @@ const Contact = () => {
           <div className="h-96 rounded-lg overflow-hidden shadow-md">
             <iframe
               title="map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12345.67890!2d-118.1234567!3d34.1234567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDM0JzEyLjQiTiAxMTjCsDA3JzEyLjQiVw!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5070.085611400343!2d121.1527285760898!3d14.267298285147966!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d9c7daf0caf5%3A0xe4fafc59e87b1190!2sThe%20Brew%20Deck!5e1!3m2!1sen!2sph!4v1744209848744!5m2!1sen!2sph"
               width="100%"
               height="100%"
               style={{ border: 0 }}
@@ -292,7 +291,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

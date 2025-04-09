@@ -1,6 +1,4 @@
-
 import React, { useEffect, useState } from 'react';
-import Layout from '../components/Layout';
 import { Building, Home, PenTool, BarChart3, Wrench, Ruler, HardHat, Truck, ChevronDown, Info, Clock, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -225,7 +223,7 @@ const Services = () => {
     : services.filter(service => service.category === activeCategory);
 
   return (
-    <Layout>
+    <>
       <div className="pt-24 pb-20 bg-gradient-to-r from-rcs-blue to-rcs-blue/80">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center">
@@ -397,7 +395,7 @@ const Services = () => {
           </Link>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 
