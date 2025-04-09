@@ -45,11 +45,12 @@ const ChatBot = () => {
     setMessage('');
 
     try {
-      const response = await fetch('https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent', {
+      // Updated to use gemini-2.0-flash model
+      const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`
+          'x-goog-api-key': apiKey
         },
         body: JSON.stringify({
           contents: [
