@@ -11,7 +11,6 @@ import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import PageTransition from "./components/PageTransition";
-import ChatBot from "./components/ChatBot";
 
 const queryClient = new QueryClient();
 
@@ -39,7 +38,6 @@ const App = () => (
         <Toaster />
         <Sonner />
         <AnimatedRoutes />
-        <ChatBot />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
