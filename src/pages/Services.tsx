@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Building, Home, PenTool, BarChart3, Wrench, Ruler, HardHat, Truck, ChevronDown, Info, Clock, Users } from 'lucide-react';
+import { Building, Home, PenTool, BarChart3, Wrench, Ruler, HardHat, Truck, ChevronDown, Info, Clock, Users, Search, CheckSquare, ArrowRight, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useToast } from "@/hooks/use-toast";
 
 interface ServiceProps {
   icon: React.ReactNode;
@@ -11,6 +16,7 @@ interface ServiceProps {
   description: string;
   features: string[];
   benefits?: string[];
+  category: string;
 }
 
 const ServiceCard: React.FC<ServiceProps> = ({ icon, title, description, features, benefits }) => {
@@ -46,13 +52,338 @@ const ServiceCard: React.FC<ServiceProps> = ({ icon, title, description, feature
         </>
       )}
       
-      <Link
-        to="/contact"
-        className="inline-block bg-rcs-gold text-rcs-blue font-medium px-6 py-2 rounded-md hover:bg-yellow-400 transition-colors duration-200"
-      >
-        Request a Quote
-      </Link>
+      <div className="flex flex-col sm:flex-row gap-3 mt-4">
+        <Link
+          to="/contact"
+          className="inline-block bg-rcs-gold text-rcs-blue font-medium px-6 py-2 rounded-md hover:bg-yellow-400 transition-colors duration-200 text-center"
+        >
+          Request a Quote
+        </Link>
+        <DialogTrigger asChild>
+          <Button variant="outline" className="flex items-center gap-2">
+            <Info size={16} /> Service Details
+          </Button>
+        </DialogTrigger>
+      </div>
     </div>
+  );
+};
+
+const QuickServiceRequestForm = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [serviceType, setServiceType] = useState('');
+  const [message, setMessage] = useState('');
+  const { toast } = useToast();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // In a real app, you would submit this data to a backend
+    toast({
+      title: "Request Submitted",
+      description: "We'll contact you shortly about your service request.",
+    });
+    
+    // Clear form fields
+    setName('');
+    setEmail('');
+    setPhone('');
+    setServiceType('');
+    setMessage('');
+  };
+
+  return (
+    <div className="bg-white rounded-lg shadow-md p-6">
+      <h3 className="text-xl font-bold text-rcs-blue mb-4">Quick Service Request</h3>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+          <Input
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full"
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <Input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full"
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+          <Input
+            id="phone"
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className="w-full"
+          />
+        </div>
+        <div>
+          <label htmlFor="serviceType" className="block text-sm font-medium text-gray-700 mb-1">Service Type</label>
+          <select
+            id="serviceType"
+            value={serviceType}
+            onChange={(e) => setServiceType(e.target.value)}
+            className="w-full border border-gray-300 rounded-md p-2"
+            required
+          >
+            <option value="">Select a service</option>
+            <option value="commercial">Commercial Construction</option>
+            <option value="residential">Residential Construction</option>
+            <option value="renovation">Renovation & Remodeling</option>
+            <option value="management">Construction Management</option>
+            <option value="contracting">General Contracting</option>
+            <option value="design">Design-Build Services</option>
+            <option value="infrastructure">Infrastructure Development</option>
+            <option value="site">Site Development</option>
+          </select>
+        </div>
+        <div>
+          <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+          <textarea
+            id="message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            className="w-full border border-gray-300 rounded-md p-2 h-24"
+          ></textarea>
+        </div>
+        <Button type="submit" className="w-full bg-rcs-blue hover:bg-blue-800">
+          Submit Request
+        </Button>
+      </form>
+    </div>
+  );
+};
+
+const ServiceComparisonTable = ({ services }: { services: ServiceProps[] }) => {
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const isMobile = useIsMobile();
+  
+  const toggleService = (title: string) => {
+    if (selectedServices.includes(title)) {
+      setSelectedServices(selectedServices.filter(service => service !== title));
+    } else {
+      if (selectedServices.length < 3) {
+        setSelectedServices([...selectedServices, title]);
+      } else {
+        setSelectedServices([...selectedServices.slice(1), title]);
+      }
+    }
+  };
+  
+  const filteredServices = services.filter(service => 
+    selectedServices.includes(service.title)
+  );
+
+  return (
+    <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+      <h3 className="text-2xl font-bold text-rcs-blue mb-4">Service Comparison</h3>
+      <p className="text-gray-600 mb-4">Select up to 3 services to compare their features side by side.</p>
+      
+      <div className="flex flex-wrap gap-2 mb-6">
+        {services.map((service) => (
+          <Button
+            key={service.title}
+            variant={selectedServices.includes(service.title) ? "default" : "outline"}
+            size="sm"
+            onClick={() => toggleService(service.title)}
+            className={`flex items-center gap-1 ${selectedServices.includes(service.title) ? 'bg-rcs-blue' : ''}`}
+          >
+            {selectedServices.includes(service.title) ? (
+              <CheckSquare size={16} />
+            ) : null}
+            {service.title}
+          </Button>
+        ))}
+      </div>
+      
+      {filteredServices.length > 0 ? (
+        <div className={`overflow-x-auto ${isMobile ? 'pb-4' : ''}`}>
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-gray-50">
+                <th className="p-3 text-left font-bold text-rcs-blue border-b"></th>
+                {filteredServices.map(service => (
+                  <th key={service.title} className="p-3 text-left font-bold text-rcs-blue border-b min-w-[200px]">
+                    <div className="flex items-center gap-2">
+                      <div className="text-rcs-blue">{service.icon}</div>
+                      {service.title}
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="p-3 border-b font-semibold">Description</td>
+                {filteredServices.map(service => (
+                  <td key={service.title} className="p-3 border-b">{service.description}</td>
+                ))}
+              </tr>
+              <tr>
+                <td className="p-3 border-b font-semibold">Features</td>
+                {filteredServices.map(service => (
+                  <td key={service.title} className="p-3 border-b">
+                    <ul className="space-y-1">
+                      {service.features.map((feature, index) => (
+                        <li key={index} className="flex items-start">
+                          <span className="text-green-500 mr-2">•</span>
+                          <span className="text-gray-600">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <td className="p-3 border-b font-semibold">Benefits</td>
+                {filteredServices.map(service => (
+                  <td key={service.title} className="p-3 border-b">
+                    {service.benefits && (
+                      <ul className="space-y-1">
+                        {service.benefits.map((benefit, index) => (
+                          <li key={index} className="flex items-start">
+                            <span className="text-green-500 mr-2">✓</span>
+                            <span className="text-gray-600">{benefit}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <td className="p-3"></td>
+                {filteredServices.map(service => (
+                  <td key={service.title} className="p-3">
+                    <Link
+                      to="/contact"
+                      className="inline-block bg-rcs-gold text-rcs-blue font-medium px-4 py-2 rounded-md hover:bg-yellow-400 transition-colors duration-200 text-center text-sm"
+                    >
+                      Request Quote
+                    </Link>
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <div className="text-center p-8 border rounded-md bg-gray-50">
+          <p className="text-gray-500">Select services to compare them</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const RelatedServices = ({ currentCategory, services }: { currentCategory: string, services: ServiceProps[] }) => {
+  const relatedServices = services
+    .filter(service => service.category === currentCategory)
+    .slice(0, 3);
+    
+  return (
+    <div className="bg-white rounded-lg shadow-md p-6 mt-8">
+      <h3 className="text-xl font-bold text-rcs-blue mb-4">Related Services</h3>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {relatedServices.map((service, index) => (
+          <div key={index} className="p-4 border rounded-md hover:shadow-md transition-all">
+            <div className="flex items-center mb-2">
+              <div className="bg-rcs-blue/10 p-2 rounded-full mr-3">
+                <div className="text-rcs-blue">{service.icon}</div>
+              </div>
+              <h4 className="font-bold text-rcs-blue">{service.title}</h4>
+            </div>
+            <p className="text-gray-600 text-sm mb-3 line-clamp-2">{service.description}</p>
+            <DialogTrigger asChild>
+              <Button variant="link" size="sm" className="text-rcs-blue p-0 flex items-center gap-1">
+                Learn more <ArrowRight size={14} />
+              </Button>
+            </DialogTrigger>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const ServiceDetails = ({ service }: { service: ServiceProps }) => {
+  return (
+    <DialogContent className="max-w-3xl">
+      <DialogHeader>
+        <DialogTitle className="flex items-center gap-2">
+          <span className="text-rcs-blue">{service.icon}</span>
+          {service.title}
+        </DialogTitle>
+        <DialogDescription>
+          Comprehensive details about our {service.title.toLowerCase()} services
+        </DialogDescription>
+      </DialogHeader>
+      
+      <div className="space-y-4">
+        <p className="text-gray-600">{service.description}</p>
+        
+        <div>
+          <h4 className="font-bold text-rcs-blue mb-2">Key Features</h4>
+          <ul className="space-y-2 mb-4 pl-5">
+            {service.features.map((feature, index) => (
+              <li key={index} className="flex items-start">
+                <span className="text-rcs-gold mr-2">•</span>
+                <span className="text-gray-600">{feature}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        
+        {service.benefits && service.benefits.length > 0 && (
+          <div>
+            <h4 className="font-bold text-rcs-blue mb-2">Benefits</h4>
+            <ul className="space-y-2 mb-4 pl-5">
+              {service.benefits.map((benefit, index) => (
+                <li key={index} className="flex items-start">
+                  <span className="text-green-500 mr-2">✓</span>
+                  <span className="text-gray-600">{benefit}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        
+        <div className="p-4 bg-gray-50 rounded-md">
+          <h4 className="font-bold text-rcs-blue mb-2">Why Choose Us for {service.title}</h4>
+          <p className="text-gray-600">
+            Our team brings years of specialized experience in {service.title.toLowerCase()}. 
+            We use industry-leading techniques and materials to ensure the highest quality results. 
+            Our clients consistently praise our attention to detail, communication, and ability to 
+            complete projects on time and within budget.
+          </p>
+        </div>
+        
+        <div className="flex justify-between items-center pt-4 border-t">
+          <p className="text-sm text-gray-500">
+            Contact us for more information about our {service.title.toLowerCase()} services.
+          </p>
+          <div className="flex gap-3">
+            <DialogClose asChild>
+              <Button variant="outline">Close</Button>
+            </DialogClose>
+            <Link to="/contact">
+              <Button className="bg-rcs-blue hover:bg-blue-800">Request Quote</Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </DialogContent>
   );
 };
 
@@ -62,6 +393,9 @@ const Services = () => {
   }, []);
 
   const [activeCategory, setActiveCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedService, setSelectedService] = useState<ServiceProps | null>(null);
+  const isMobile = useIsMobile();
   
   const serviceCategories = [
     { id: "all", name: "All Services" },
@@ -218,12 +552,16 @@ const Services = () => {
     }
   ];
 
-  const filteredServices = activeCategory === "all" 
-    ? services 
-    : services.filter(service => service.category === activeCategory);
+  const filteredServices = services
+    .filter(service => activeCategory === "all" || service.category === activeCategory)
+    .filter(service => 
+      searchQuery === "" || 
+      service.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      service.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
   return (
-    <>
+    <Dialog>
       <div className="pt-24 pb-20 bg-gradient-to-r from-rcs-blue to-rcs-blue/80">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center">
@@ -252,36 +590,79 @@ const Services = () => {
             </p>
           </div>
           
-          <div className="mb-12">
-            <Tabs defaultValue="all" className="w-full" onValueChange={setActiveCategory}>
-              <TabsList className="w-full flex flex-wrap justify-center mb-8 bg-white p-1 rounded-lg shadow-sm">
-                {serviceCategories.map((category) => (
-                  <TabsTrigger
-                    key={category.id}
-                    value={category.id}
-                    className={cn(
-                      "flex-grow data-[state=active]:bg-rcs-blue data-[state=active]:text-white",
-                      "max-w-[200px] my-1"
-                    )}
-                  >
-                    {category.name}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
+          <div className="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div className="relative w-full md:w-96">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+              <Input
+                placeholder="Search services..."
+                className="pl-10"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              {searchQuery && (
+                <button 
+                  className="absolute right-3 top-3"
+                  onClick={() => setSearchQuery("")}
+                >
+                  <X className="h-4 w-4 text-gray-500" />
+                </button>
+              )}
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            <div className="lg:col-span-2">
+              <Tabs defaultValue="all" className="w-full" onValueChange={setActiveCategory}>
+                <TabsList className={`w-full flex flex-wrap justify-start mb-8 bg-white p-1 rounded-lg shadow-sm ${isMobile ? 'overflow-x-auto' : ''}`}>
+                  {serviceCategories.map((category) => (
+                    <TabsTrigger
+                      key={category.id}
+                      value={category.id}
+                      className={cn(
+                        "flex-grow data-[state=active]:bg-rcs-blue data-[state=active]:text-white",
+                        "max-w-[200px] my-1 whitespace-nowrap"
+                      )}
+                    >
+                      {category.name}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+                
+                {filteredServices.length > 0 ? (
+                  <div className="grid grid-cols-1 gap-8">
+                    {filteredServices.map((service, index) => (
+                      <ServiceCard
+                        key={index}
+                        icon={service.icon}
+                        title={service.title}
+                        description={service.description}
+                        features={service.features}
+                        benefits={service.benefits}
+                        category={service.category}
+                      />
+                    ))}
+                    {selectedService && <ServiceDetails service={selectedService} />}
+                  </div>
+                ) : (
+                  <div className="text-center p-12 bg-white rounded-lg shadow-md">
+                    <p className="text-gray-600 mb-4">No services found matching your search criteria.</p>
+                    <Button onClick={() => setSearchQuery("")} variant="outline">Clear Search</Button>
+                  </div>
+                )}
+              </Tabs>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredServices.map((service, index) => (
-                  <ServiceCard
-                    key={index}
-                    icon={service.icon}
-                    title={service.title}
-                    description={service.description}
-                    features={service.features}
-                    benefits={service.benefits}
-                  />
-                ))}
-              </div>
-            </Tabs>
+              {filteredServices.length > 0 && (
+                <ServiceComparisonTable services={filteredServices} />
+              )}
+              
+              {activeCategory !== "all" && filteredServices.length > 0 && (
+                <RelatedServices currentCategory={activeCategory} services={services} />
+              )}
+            </div>
+            
+            <div className="lg:col-span-1 h-fit sticky top-24">
+              <QuickServiceRequestForm />
+            </div>
           </div>
         </div>
       </div>
@@ -296,7 +677,7 @@ const Services = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 text-center">
+            <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 text-center hover:shadow-md transition-all duration-300 hover:translate-y-[-5px]">
               <div className="w-16 h-16 bg-rcs-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Clock className="text-rcs-blue" size={28} />
               </div>
@@ -304,7 +685,7 @@ const Services = () => {
               <p className="text-gray-600">We work closely with you to understand your vision, needs, and budget, developing comprehensive plans that will guide the entire construction process.</p>
             </div>
             
-            <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 text-center">
+            <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 text-center hover:shadow-md transition-all duration-300 hover:translate-y-[-5px]">
               <div className="w-16 h-16 bg-rcs-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <HardHat className="text-rcs-blue" size={28} />
               </div>
@@ -312,7 +693,7 @@ const Services = () => {
               <p className="text-gray-600">Our skilled team executes the project with precision, adhering to the highest standards of quality and safety while keeping you informed throughout the process.</p>
             </div>
             
-            <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 text-center">
+            <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 text-center hover:shadow-md transition-all duration-300 hover:translate-y-[-5px]">
               <div className="w-16 h-16 bg-rcs-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="text-rcs-blue" size={28} />
               </div>
@@ -376,6 +757,14 @@ const Services = () => {
                   We understand that changes may arise during construction. We manage changes through a formal change order process that documents the requested modifications, associated costs, and potential timeline adjustments. This transparent approach ensures clear communication and prevents misunderstandings while accommodating your evolving needs.
                 </AccordionContent>
               </AccordionItem>
+              <AccordionItem value="item-6">
+                <AccordionTrigger className="text-left text-rcs-blue font-medium">
+                  Do you offer warranties on your construction work?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600">
+                  Yes, we stand behind our work with comprehensive warranties. Typically, we offer a 1-year warranty on workmanship and materials, while many installed systems come with manufacturers' warranties of up to 10 years or more. We'll explain the specific warranty terms for your project before work begins.
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
           </div>
         </div>
@@ -395,7 +784,7 @@ const Services = () => {
           </Link>
         </div>
       </div>
-    </>
+    </Dialog>
   );
 };
 
