@@ -323,7 +323,7 @@ const ChatBot = () => {
     <>
       <button
         onClick={toggleChat}
-        className={`fixed bottom-20 md:bottom-6 right-6 z-40 bg-rcs-blue text-white rounded-full p-4 shadow-lg hover:bg-blue-800 transition-all duration-300 flex items-center justify-center gap-2 ${
+        className={`fixed bottom-6 right-6 z-40 bg-rcs-blue text-white rounded-full p-4 shadow-lg hover:bg-blue-800 transition-all duration-300 flex items-center justify-center gap-2 ${
           isOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'
         } hover:scale-105`}
         aria-label="Open chat"

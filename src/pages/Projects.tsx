@@ -22,13 +22,17 @@ const projects: Project[] = [{
   galleryImages: ["https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80"]
 }, {
   id: "project-2",
-  title: "Luxury Residential Complex",
+  title: "Cassasis Residential Building",
   category: "Residential",
-  location: "Oceanview Heights, CA",
-  completionDate: "September 2021",
-  description: "A luxury residential complex comprising 50 high-end apartments, featuring amenities such as a swimming pool, fitness center, and rooftop garden. This project showcases our commitment to quality and attention to detail.",
-  image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
-  galleryImages: ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80"]
+  location: "Chateux de Paris, Silang, Cavite",
+  completionDate: "2024",
+  description: "From Blueprints to Reality: Our Cassasis Residential Building at Chateux de Paris, Silang, Cavite is finished. Our sincere gratitude for Cassasis Family for trusting the ability and craftmanship of Rodelas Construction Services, where form meets function in a masterpiece built to endure. Glory to God!",
+  image: "/images/projects/residential/cassasis_residential/main.jpg",
+  galleryImages: [
+    "/images/projects/residential/cassasis_residential/gallery1.jpg",
+    "/images/projects/residential/cassasis_residential/gallery2.jpg",
+    "/images/projects/residential/cassasis_residential/gallery3.jpg"
+  ]
 }, {
   id: "project-3",
   title: "Shopping Mall Renovation",
