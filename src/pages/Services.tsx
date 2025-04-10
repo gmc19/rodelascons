@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Building, Home, PenTool, BarChart3, Wrench, Ruler, HardHat, Truck, ChevronDown, Info, Clock, Users, Search, CheckSquare, ArrowRight, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -20,52 +21,124 @@ interface ServiceProps {
 }
 
 const ServiceCard: React.FC<ServiceProps> = ({ icon, title, description, features, benefits }) => {
+  const [showDetails, setShowDetails] = useState(false);
+
   return (
-    <div className="service-card bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
-      <div className="bg-rcs-blue/10 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
-        <div className="text-rcs-blue">{icon}</div>
-      </div>
-      <h3 className="text-2xl font-bold text-rcs-blue mb-4">{title}</h3>
-      <p className="text-gray-600 mb-6">{description}</p>
-      
-      <h4 className="font-bold text-rcs-blue mb-3">Key Features</h4>
-      <ul className="space-y-2 mb-6">
-        {features.map((feature, index) => (
-          <li key={index} className="flex items-start">
-            <span className="text-rcs-gold mr-2">•</span>
-            <span className="text-gray-600">{feature}</span>
-          </li>
-        ))}
-      </ul>
-      
-      {benefits && benefits.length > 0 && (
-        <>
-          <h4 className="font-bold text-rcs-blue mb-3">Benefits</h4>
-          <ul className="space-y-2 mb-6">
-            {benefits.map((benefit, index) => (
-              <li key={index} className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
-                <span className="text-gray-600">{benefit}</span>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-      
-      <div className="flex flex-col sm:flex-row gap-3 mt-4">
-        <Link
-          to="/contact"
-          className="inline-block bg-rcs-gold text-rcs-blue font-medium px-6 py-2 rounded-md hover:bg-yellow-400 transition-colors duration-200 text-center"
-        >
-          Request a Quote
-        </Link>
-        <DialogTrigger asChild>
-          <Button variant="outline" className="flex items-center gap-2">
+    <>
+      <div className="service-card bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+        <div className="bg-rcs-blue/10 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+          <div className="text-rcs-blue">{icon}</div>
+        </div>
+        <h3 className="text-2xl font-bold text-rcs-blue mb-4">{title}</h3>
+        <p className="text-gray-600 mb-6">{description}</p>
+        
+        <h4 className="font-bold text-rcs-blue mb-3">Key Features</h4>
+        <ul className="space-y-2 mb-6">
+          {features.map((feature, index) => (
+            <li key={index} className="flex items-start">
+              <span className="text-rcs-gold mr-2">•</span>
+              <span className="text-gray-600">{feature}</span>
+            </li>
+          ))}
+        </ul>
+        
+        {benefits && benefits.length > 0 && (
+          <>
+            <h4 className="font-bold text-rcs-blue mb-3">Benefits</h4>
+            <ul className="space-y-2 mb-6">
+              {benefits.map((benefit, index) => (
+                <li key={index} className="flex items-start">
+                  <span className="text-green-500 mr-2">✓</span>
+                  <span className="text-gray-600">{benefit}</span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+        
+        <div className="flex flex-col sm:flex-row gap-3 mt-4">
+          <Link
+            to="/contact"
+            className="inline-block bg-rcs-gold text-rcs-blue font-medium px-6 py-2 rounded-md hover:bg-yellow-400 transition-colors duration-200 text-center"
+          >
+            Request a Quote
+          </Link>
+          <Button 
+            variant="outline" 
+            className="flex items-center gap-2"
+            onClick={() => setShowDetails(true)}
+          >
             <Info size={16} /> Service Details
           </Button>
-        </DialogTrigger>
+        </div>
       </div>
-    </div>
+
+      <Dialog open={showDetails} onOpenChange={setShowDetails}>
+        <DialogContent className="max-w-3xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <span className="text-rcs-blue">{icon}</span>
+              {title}
+            </DialogTitle>
+            <DialogDescription>
+              Comprehensive details about our {title.toLowerCase()} services
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            <p className="text-gray-600">{description}</p>
+            
+            <div>
+              <h4 className="font-bold text-rcs-blue mb-2">Key Features</h4>
+              <ul className="space-y-2 mb-4 pl-5">
+                {features.map((feature, index) => (
+                  <li key={index} className="flex items-start">
+                    <span className="text-rcs-gold mr-2">•</span>
+                    <span className="text-gray-600">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            {benefits && benefits.length > 0 && (
+              <div>
+                <h4 className="font-bold text-rcs-blue mb-2">Benefits</h4>
+                <ul className="space-y-2 mb-4 pl-5">
+                  {benefits.map((benefit, index) => (
+                    <li key={index} className="flex items-start">
+                      <span className="text-green-500 mr-2">✓</span>
+                      <span className="text-gray-600">{benefit}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            
+            <div className="p-4 bg-gray-50 rounded-md">
+              <h4 className="font-bold text-rcs-blue mb-2">Why Choose Us for {title}</h4>
+              <p className="text-gray-600">
+                Our team brings years of specialized experience in {title.toLowerCase()}. 
+                We use industry-leading techniques and materials to ensure the highest quality results. 
+                Our clients consistently praise our attention to detail, communication, and ability to 
+                complete projects on time and within budget.
+              </p>
+            </div>
+            
+            <div className="flex justify-between items-center pt-4 border-t">
+              <p className="text-sm text-gray-500">
+                Contact us for more information about our {title.toLowerCase()} services.
+              </p>
+              <div className="flex gap-3">
+                <Button variant="outline" onClick={() => setShowDetails(false)}>Close</Button>
+                <Link to="/contact">
+                  <Button className="bg-rcs-blue hover:bg-blue-800">Request Quote</Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 
@@ -613,20 +686,23 @@ const Services = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
             <div className="lg:col-span-2">
               <Tabs defaultValue="all" className="w-full" onValueChange={setActiveCategory}>
-                <TabsList className={`w-full flex flex-wrap justify-start mb-8 bg-white p-1 rounded-lg shadow-sm ${isMobile ? 'overflow-x-auto' : ''}`}>
-                  {serviceCategories.map((category) => (
-                    <TabsTrigger
-                      key={category.id}
-                      value={category.id}
-                      className={cn(
-                        "flex-grow data-[state=active]:bg-rcs-blue data-[state=active]:text-white",
-                        "max-w-[200px] my-1 whitespace-nowrap"
-                      )}
-                    >
-                      {category.name}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
+                <div className="overflow-x-auto pb-4 mb-4">
+                  <TabsList className="flex w-full min-w-max bg-white p-1 rounded-lg shadow-sm">
+                    {serviceCategories.map((category) => (
+                      <TabsTrigger
+                        key={category.id}
+                        value={category.id}
+                        className={cn(
+                          "flex-grow data-[state=active]:bg-rcs-blue data-[state=active]:text-white",
+                          "my-1 whitespace-nowrap px-4",
+                          isMobile ? "text-sm" : ""
+                        )}
+                      >
+                        {category.name}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                </div>
                 
                 {filteredServices.length > 0 ? (
                   <div className="grid grid-cols-1 gap-8">

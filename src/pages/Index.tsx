@@ -10,8 +10,13 @@ import TeamSection from '../components/home/TeamSection';
 import FaqSection from '../components/home/FaqSection';
 import CtaSection from '../components/home/CtaSection';
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 
 const Index = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   return (
     <motion.div
       initial={{ opacity: 0 }}
