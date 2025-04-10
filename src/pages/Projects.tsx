@@ -1,7 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { CalendarDays, MapPin, ArrowLeft, ArrowRight } from 'lucide-react';
+import React, { useEffect, useState, useRef } from 'react';
+import { CalendarDays, MapPin, ArrowLeft, ArrowRight, Tag, CircleDot, ExternalLink, Award, Check } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import ProjectGallery from '../components/projects/ProjectGallery';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+interface ProjectFeature {
+  title: string;
+  description: string;
+}
 
 interface Project {
   id: string;
@@ -12,6 +21,10 @@ interface Project {
   description: string;
   image: string;
   galleryImages: string[];
+  features?: ProjectFeature[];
+  client?: string;
+  highlights?: string[];
+  tags?: string[];
 }
 
 const projects: Project[] = [
@@ -23,7 +36,15 @@ const projects: Project[] = [
     completionDate: "June 2022",
     description: "A state-of-the-art 12-story office building featuring energy-efficient design, collaborative workspaces, and a stunning glass facade. This project was completed on time and within budget, meeting all sustainability requirements.",
     image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
-    galleryImages: ["https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80"]
+    galleryImages: ["https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80"],
+    features: [
+      { title: "Energy Efficiency", description: "LEED Gold certified with advanced energy management systems" },
+      { title: "Smart Building Technology", description: "Integrated IoT sensors for climate and usage optimization" },
+      { title: "Sustainable Materials", description: "Over 60% recycled or locally sourced building materials" }
+    ],
+    client: "TechCorp Innovations",
+    highlights: ["Completed 2 months ahead of schedule", "Zero safety incidents", "14% under budget"],
+    tags: ["Office", "Glass Facade", "LEED Certified", "Smart Building"]
   }, {
     id: "project-2",
     title: "Cassasis Residential Building",
@@ -36,7 +57,15 @@ const projects: Project[] = [
       "/images/projects/residential/cassasis_residential/gallery1.jpg",
       "/images/projects/residential/cassasis_residential/gallery2.jpg",
       "/images/projects/residential/cassasis_residential/gallery3.jpg"
-    ]
+    ],
+    features: [
+      { title: "Custom Finishes", description: "Premium materials and craftsmanship throughout" },
+      { title: "Architectural Excellence", description: "Unique design that balances aesthetics and functionality" },
+      { title: "Energy Efficiency", description: "Smart home features for optimal energy consumption" }
+    ],
+    client: "Cassasis Family",
+    highlights: ["Turnkey project delivery", "Custom design elements", "Satisfied homeowner testimonial"],
+    tags: ["Residential", "Custom Home", "Luxury Finishes", "Modern Design"]
   }, {
     id: "project-3",
     title: "Shopping Mall Renovation",
@@ -79,6 +108,9 @@ const projects: Project[] = [
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [expandedProject, setExpandedProject] = useState<string | null>(null);
+  const [activeSectionTab, setActiveSectionTab] = useState("gallery");
+  const projectRefs = useRef<{[key: string]: HTMLDivElement | null}>({});
+  
   const categories = ["All", ...Array.from(new Set(projects.map(project => project.category)))];
   const filteredProjects = selectedCategory === "All" ? projects : projects.filter(project => project.category === selectedCategory);
 
@@ -105,10 +137,12 @@ const Projects = () => {
   const toggleProject = (projectId: string) => {
     if (expandedProject === projectId) {
       setExpandedProject(null);
+      setActiveSectionTab("gallery"); // Reset to gallery tab when closing
       // Remove hash from URL
       window.history.pushState(null, '', window.location.pathname);
     } else {
       setExpandedProject(projectId);
+      setActiveSectionTab("gallery"); // Reset to gallery tab when opening
       // Update URL hash without scrolling
       window.history.pushState(null, '', `#${projectId}`);
       // Scroll to the project
@@ -151,105 +185,240 @@ const Projects = () => {
         </div>
       </div>
 
-      <div className="py-12 bg-gray-50">
+      <div className="py-12 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex justify-center mb-8">
             <div className="flex flex-wrap justify-center gap-2">
               {categories.map(category => (
-                <button 
+                <Button 
                   key={category} 
                   onClick={() => setSelectedCategory(category)} 
-                  className={`px-5 py-3 rounded-md transition-colors duration-200 font-bold text-lg ${
+                  variant={selectedCategory === category ? "default" : "outline"}
+                  className={`px-5 py-6 rounded-md transition-all duration-300 font-bold text-lg ${
                     selectedCategory === category 
-                      ? 'bg-rcs-blue text-white shadow-md' 
+                      ? 'bg-rcs-blue text-white shadow-md scale-105' 
                       : 'bg-white text-rcs-blue hover:bg-gray-100 border border-gray-200'
                   }`}
                 >
                   {category}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
 
           <div className="space-y-12 mt-8">
             {filteredProjects.map(project => (
-              <Card 
-                key={project.id} 
-                id={project.id} 
-                className="bg-white rounded-lg overflow-hidden shadow-lg border-0 transition-all duration-300 hover:shadow-xl"
+              <motion.div
+                key={project.id}
+                id={project.id}
+                ref={el => projectRefs.current[project.id] = el}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
               >
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <div className="relative h-[300px] lg:h-auto overflow-hidden">
-                    <img 
-                      src={project.image} 
-                      alt={project.title} 
-                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                    />
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-rcs-gold text-rcs-blue text-sm font-bold px-3 py-1 rounded-full">
-                        {project.category}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <CardContent className="p-6 lg:p-8 flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-2xl md:text-3xl font-bold text-rcs-blue mb-3">{project.title}</h3>
-                      
-                      <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
-                        <div className="flex items-center">
-                          <MapPin size={16} className="mr-1 text-rcs-gold" />
-                          <span>{project.location}</span>
-                        </div>
-                        <div className="flex items-center">
-                          <CalendarDays size={16} className="mr-1 text-rcs-gold" />
-                          <span>Completed: {project.completionDate}</span>
-                        </div>
+                <Card className="bg-white rounded-lg overflow-hidden shadow-lg border-0 transition-all duration-300 hover:shadow-xl">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div className="relative h-[300px] lg:h-auto overflow-hidden group">
+                      <img 
+                        src={project.image} 
+                        alt={project.title} 
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                        <Badge variant="secondary" className="bg-rcs-gold text-rcs-blue text-sm font-bold px-3 py-1">
+                          {project.category}
+                        </Badge>
                       </div>
                       
-                      <p className="text-gray-700 mb-6">
-                        {expandedProject === project.id ? project.description : `${project.description.substring(0, 150)}${project.description.length > 150 ? '...' : ''}`}
-                      </p>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        <div className="p-6 w-full">
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleProject(project.id);
+                            }} 
+                            className="bg-white/90 hover:bg-white text-rcs-blue font-medium rounded-md px-4 py-2 transition-colors duration-200 inline-flex items-center"
+                          >
+                            <ExternalLink size={16} className="mr-2" /> View Project Details
+                          </button>
+                        </div>
+                      </div>
                     </div>
                     
-                    <button 
-                      onClick={() => toggleProject(project.id)} 
-                      className="text-rcs-blue bg-rcs-gold/20 border border-rcs-gold px-5 py-2 rounded-md hover:bg-rcs-gold hover:text-rcs-blue transition-colors duration-300 font-semibold inline-flex items-center justify-center w-full md:w-auto"
-                    >
-                      {expandedProject === project.id ? (
-                        <>View Less <ArrowLeft size={18} className="ml-2" /></>
-                      ) : (
-                        <>View Details <ArrowRight size={18} className="ml-2" /></>
-                      )}
-                    </button>
-                  </CardContent>
-                </div>
-                
-                {expandedProject === project.id && (
-                  <div className="p-6 pt-0 lg:p-8 lg:pt-0 animate-fade-in">
-                    <hr className="my-6 border-gray-200" />
-                    
-                    <h4 className="text-xl font-bold text-rcs-blue mb-4">Project Gallery</h4>
-                    
-                    <ProjectGallery 
-                      images={[project.image, ...project.galleryImages]} 
-                      title={project.title} 
-                    />
-                    
-                    <h4 className="text-xl font-bold text-rcs-blue mt-8 mb-4">Project Details</h4>
-                    <p className="text-gray-700 mb-6">{project.description}</p>
-                    
-                    <div className="flex justify-center mt-8">
-                      <button 
+                    <CardContent className="p-6 lg:p-8 flex flex-col justify-between">
+                      <div>
+                        <h3 className="text-2xl md:text-3xl font-bold text-rcs-blue mb-3">{project.title}</h3>
+                        
+                        <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
+                          <div className="flex items-center">
+                            <MapPin size={16} className="mr-1 text-rcs-gold" />
+                            <span>{project.location}</span>
+                          </div>
+                          <div className="flex items-center">
+                            <CalendarDays size={16} className="mr-1 text-rcs-gold" />
+                            <span>Completed: {project.completionDate}</span>
+                          </div>
+                          {project.client && (
+                            <div className="flex items-center">
+                              <Award size={16} className="mr-1 text-rcs-gold" />
+                              <span>Client: {project.client}</span>
+                            </div>
+                          )}
+                        </div>
+                        
+                        <p className="text-gray-700 mb-6">
+                          {expandedProject === project.id ? project.description : `${project.description.substring(0, 150)}${project.description.length > 150 ? '...' : ''}`}
+                        </p>
+                        
+                        {project.tags && (
+                          <div className="flex flex-wrap gap-2 mb-6">
+                            {project.tags.map((tag, index) => (
+                              <Badge key={index} variant="outline" className="bg-gray-100 text-gray-700 hover:bg-gray-200">
+                                <Tag size={12} className="mr-1" />
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      
+                      <Button 
                         onClick={() => toggleProject(project.id)} 
-                        className="text-rcs-blue bg-rcs-gold px-6 py-3 rounded-md hover:bg-yellow-400 transition-colors duration-300 font-semibold inline-flex items-center"
+                        variant="outline"
+                        className="text-rcs-blue border border-rcs-gold/80 hover:bg-rcs-gold hover:text-rcs-blue transition-all duration-300 font-semibold group w-full md:w-auto"
                       >
-                        Close Details <ArrowLeft size={18} className="ml-2" />
-                      </button>
-                    </div>
+                        {expandedProject === project.id ? (
+                          <>View Less <ArrowLeft size={18} className="ml-2 transition-transform group-hover:-translate-x-1" /></>
+                        ) : (
+                          <>View Details <ArrowRight size={18} className="ml-2 transition-transform group-hover:translate-x-1" /></>
+                        )}
+                      </Button>
+                    </CardContent>
                   </div>
-                )}
-              </Card>
+                  
+                  <AnimatePresence>
+                    {expandedProject === project.id && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="p-6 pt-0 lg:p-8 lg:pt-0">
+                          <hr className="my-6 border-gray-200" />
+                          
+                          <Tabs value={activeSectionTab} onValueChange={setActiveSectionTab} className="w-full">
+                            <TabsList className="grid w-full grid-cols-3 mb-8">
+                              <TabsTrigger value="gallery" className="text-lg">Project Gallery</TabsTrigger>
+                              <TabsTrigger value="details" className="text-lg">Project Details</TabsTrigger>
+                              <TabsTrigger value="features" className="text-lg">Features & Highlights</TabsTrigger>
+                            </TabsList>
+                            
+                            <TabsContent value="gallery" className="mt-0">
+                              <ProjectGallery 
+                                images={[project.image, ...project.galleryImages]} 
+                                title={project.title} 
+                              />
+                            </TabsContent>
+                            
+                            <TabsContent value="details" className="mt-0">
+                              <div className="bg-gray-50 rounded-lg p-6 shadow-inner">
+                                <h4 className="text-xl font-bold text-rcs-blue mb-4">About This Project</h4>
+                                <p className="text-gray-700 whitespace-pre-line">{project.description}</p>
+                                
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                                  <div className="bg-white rounded-lg p-5 shadow-sm">
+                                    <h5 className="font-bold text-lg mb-3 text-rcs-blue">Project Information</h5>
+                                    <ul className="space-y-3">
+                                      <li className="flex items-center">
+                                        <CircleDot size={16} className="text-rcs-gold mr-2" />
+                                        <span className="font-semibold">Category:</span>
+                                        <span className="ml-2">{project.category}</span>
+                                      </li>
+                                      <li className="flex items-center">
+                                        <CircleDot size={16} className="text-rcs-gold mr-2" />
+                                        <span className="font-semibold">Location:</span>
+                                        <span className="ml-2">{project.location}</span>
+                                      </li>
+                                      <li className="flex items-center">
+                                        <CircleDot size={16} className="text-rcs-gold mr-2" />
+                                        <span className="font-semibold">Completion:</span>
+                                        <span className="ml-2">{project.completionDate}</span>
+                                      </li>
+                                      {project.client && (
+                                        <li className="flex items-center">
+                                          <CircleDot size={16} className="text-rcs-gold mr-2" />
+                                          <span className="font-semibold">Client:</span>
+                                          <span className="ml-2">{project.client}</span>
+                                        </li>
+                                      )}
+                                    </ul>
+                                  </div>
+                                  
+                                  {project.tags && (
+                                    <div className="bg-white rounded-lg p-5 shadow-sm">
+                                      <h5 className="font-bold text-lg mb-3 text-rcs-blue">Project Tags</h5>
+                                      <div className="flex flex-wrap gap-2">
+                                        {project.tags.map((tag, index) => (
+                                          <Badge key={index} className="bg-gray-100 text-gray-700 hover:bg-gray-200">
+                                            {tag}
+                                          </Badge>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </TabsContent>
+                            
+                            <TabsContent value="features" className="mt-0">
+                              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                {project.features && (
+                                  <div className="bg-gray-50 rounded-lg p-6 shadow-inner">
+                                    <h4 className="text-xl font-bold text-rcs-blue mb-4">Key Features</h4>
+                                    <ul className="space-y-4">
+                                      {project.features.map((feature, index) => (
+                                        <li key={index} className="bg-white rounded-md p-4 shadow-sm">
+                                          <h5 className="font-bold text-rcs-blue">{feature.title}</h5>
+                                          <p className="text-gray-700">{feature.description}</p>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                )}
+                                
+                                {project.highlights && (
+                                  <div className="bg-gray-50 rounded-lg p-6 shadow-inner">
+                                    <h4 className="text-xl font-bold text-rcs-blue mb-4">Project Highlights</h4>
+                                    <ul className="space-y-2">
+                                      {project.highlights.map((highlight, index) => (
+                                        <li key={index} className="flex items-start">
+                                          <Check size={20} className="text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                                          <span>{highlight}</span>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                )}
+                              </div>
+                            </TabsContent>
+                          </Tabs>
+                          
+                          <div className="flex justify-center mt-8">
+                            <Button 
+                              onClick={() => toggleProject(project.id)} 
+                              className="bg-rcs-gold text-rcs-blue hover:bg-yellow-400 transition-colors duration-300 font-semibold"
+                            >
+                              Close Details <ArrowLeft size={18} className="ml-2" />
+                            </Button>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </Card>
+              </motion.div>
             ))}
           </div>
         </div>

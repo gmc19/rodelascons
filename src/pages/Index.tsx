@@ -9,10 +9,16 @@ import TestimonialsSection from '../components/home/TestimonialsSection';
 import TeamSection from '../components/home/TeamSection';
 import FaqSection from '../components/home/FaqSection';
 import CtaSection from '../components/home/CtaSection';
+import { motion } from 'framer-motion';
 
 const Index = () => {
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <HeroSection />
       <AboutUsSection />
       <ServicesSection />
@@ -22,7 +28,7 @@ const Index = () => {
       <TestimonialsSection />
       <FaqSection />
       <CtaSection />
-    </>
+    </motion.div>
   );
 };
 
