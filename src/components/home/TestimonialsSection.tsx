@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Star, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -17,53 +16,39 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     id: 1,
-    name: "John Smith",
-    role: "CEO",
-    company: "Smith Enterprises",
-    quote: "Rodelas Construction Services delivered our office building renovation project on time and within budget. Their attention to detail and quality of work exceeded our expectations.",
+    name: "Jezelle HauteAmorado",
+    role: "Business Owner",
+    company: "Jezelle HauteAmorado Fashion Boutique",
+    quote: "Rodelas Construction Services transformed our commercial space into a stunning fashion boutique. Their attention to detail in the glass partitions and interior design perfectly captures our brand's essence.",
     stars: 5,
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80",
-    project: "Office Building Renovation"
+    project: "Commercial Interior Fit-Out"
   },
   {
     id: 2,
-    name: "Emily Johnson",
-    role: "Property Developer",
-    company: "Johnson Properties",
-    quote: "We've worked with RCS on multiple residential projects, and they've consistently proven their expertise and reliability. Highly recommended for any construction needs.",
+    name: "Racha Family",
+    role: "Homeowner",
+    company: "",
+    quote: "We are extremely satisfied with how RCS brought our vision to life. Every detail of our home, from the structure to the finishes, was thoughtfully designed and executed with precision.",
     stars: 5,
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80",
-    project: "Luxury Apartment Complex"
+    project: "The Racha Project"
   },
   {
     id: 3,
-    name: "Michael Brown",
-    role: "Director",
-    company: "City Development Corp",
-    quote: "The team at Rodelas Construction Services are true professionals. From planning to execution, they managed our commercial project with precision and excellence.",
-    stars: 4,
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80",
-    project: "Commercial Mall Construction"
+    name: "South Forbes Resident",
+    role: "Property Owner",
+    company: "South Forbes Villas",
+    quote: "The renovation work by RCS has completely transformed our property. Their expertise in surface preparation and attention to detail in the repainting has given our home a fresh, modern look while preserving its classic character.",
+    stars: 5,
+    project: "Renovation & Repaint Project"
   },
   {
     id: 4,
-    name: "Sandra Martinez",
+    name: "Cassasis Family",
     role: "Homeowner",
     company: "",
-    quote: "We hired RCS for our home renovation and couldn't be happier with the results. Their team was courteous, professional, and delivered exceptional quality work.",
+    quote: "From blueprints to reality, RCS has exceeded our expectations. Their ability to deliver quality craftsmanship and attention to detail has resulted in a beautiful home we're proud of. Glory to God!",
     stars: 5,
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80",
-    project: "Home Renovation"
-  },
-  {
-    id: 5,
-    name: "Robert Chen",
-    role: "Operations Manager",
-    company: "Pacific Industries",
-    quote: "The industrial facility RCS built for us has been functioning flawlessly. Their understanding of specialized construction requirements made all the difference.",
-    stars: 5,
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&q=80",
-    project: "Industrial Facility Construction"
+    project: "Cassasis Residential Building"
   }
 ];
 

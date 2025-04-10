@@ -37,27 +37,7 @@ const teamMembers: TeamMember[] = [
       email: "maria@rcs-construction.com"
     }
   },
-  { 
-    id: 3,
-    name: "David Chen",
-    role: "Lead Architect",
-    bio: "David brings creative vision and technical expertise to transform client ideas into innovative, functional and beautiful structures.",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=500&q=80",
-    social: {
-      linkedin: "https://linkedin.com",
-      email: "david@rcs-construction.com"
-    }
-  },
-  {
-    id: 4,
-    name: "Sarah Johnson",
-    role: "Interior Designer",
-    bio: "Sarah specializes in creating stunning interior spaces that perfectly balance aesthetics, functionality, and client preferences.",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=500&q=80",
-    social: {
-      email: "sarah@rcs-construction.com"
-    }
-  }
+
 ];
 
 const TeamMemberCard = ({ member, delay }: { member: TeamMember; delay: number }) => {

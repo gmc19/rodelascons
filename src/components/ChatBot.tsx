@@ -20,13 +20,13 @@ const ChatBot = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([
     { 
-      content: "Hi! I'm your RCS Construction Assistant. How can I help you with your construction needs today?", 
+      content: "Hi! I'm your RCS Assistant. How can I help you today?", 
       isBot: true, 
       timestamp: new Date(),
       buttons: [
-        { text: "Our Services", action: "What services do you offer?", path: "/services" },
-        { text: "Get a Quote", action: "I need a quote for my project", path: "/contact" },
-        { text: "View Projects", action: "Show me your projects", path: "/projects" }
+        { text: "Services", action: "What are your services?", path: "/services" },
+        { text: "Get Quote", action: "I need a quote", path: "/contact" },
+        { text: "Projects", action: "Show me your projects", path: "/projects" }
       ]
     }
   ]);
@@ -63,91 +63,7 @@ const ChatBot = () => {
     });
   };
 
-  const getCompanyInfo = (query: string) => {
-    if (query.toLowerCase().includes('about') || query.toLowerCase().includes('company') || query.toLowerCase().includes('rcs')) {
-      return {
-        content: "Rodelas Construction Services (RCS) has been a trusted name in construction since 2010. We specialize in:\n\n• Commercial & Residential Construction\n• Renovation & Remodeling\n• Construction Management\n\nOur team of experienced professionals is committed to delivering high-quality projects on time and within budget.",
-        buttons: [
-          { text: "Our Services", action: "Tell me about your services", path: "/services" },
-          { text: "View Projects", action: "Show me your projects", path: "/projects" },
-          { text: "Contact Us", action: "I want to get in touch", path: "/contact" }
-        ]
-      };
-    }
-    
-    if (query.toLowerCase().includes('arnold') || query.toLowerCase().includes('ceo') || query.toLowerCase().includes('founder') || query.toLowerCase().includes('owner')) {
-      return {
-        content: "Engr. Arnold Rodelas is the founder and CEO of Rodelas Construction Services. With his extensive experience in construction and engineering, he established RCS in 2010. Under his leadership, RCS has grown to become one of the most trusted names in the construction industry, known for delivering excellence in every project.",
-        buttons: [
-          { text: "Our Projects", action: "Show our completed projects", path: "/projects" },
-          { text: "Get in Touch", action: "Contact us", path: "/contact" }
-        ]
-      };
-    }
-    
-    if (query.toLowerCase().includes('contact') || query.toLowerCase().includes('reach')) {
-      return {
-        content: "You can contact Rodelas Construction Services through:\n\nPhone:\n• Globe: 09670598903/09951858305\n• Landline: 049-547-0926\n\nEmail: engineeringdreams.rcs@gmail.com\n\nAddress: Block 8 Lot 7 Phase 2 Gregory Street, St. Joseph Village, 7 Marinig, Cabuyao, 4025 Laguna",
-        buttons: [
-          { text: "Call Now", action: "I want to call" },
-          { text: "Send Email", action: "I want to email" },
-          { text: "View Map", action: "Show me your location" },
-          { text: "Contact Page", action: "Go to contact page", path: "/contact" }
-        ]
-      };
-    }
-    
-    if (query.toLowerCase().includes('pricing') || query.toLowerCase().includes('cost') || query.toLowerCase().includes('estimate')) {
-      return {
-        content: "Our pricing depends on the project size and specifications. For a basic estimate:\n\n• Residential construction: ₱35,000-₱50,000 per sqm\n• Commercial construction: ₱45,000-₱65,000 per sqm\n• Renovation: ₱15,000-₱30,000 per sqm\n\nWant me to calculate an estimate for you?",
-        buttons: [
-          { text: "Calculate", action: "I need a price calculation" },
-          { text: "Talk to Sales", action: "I want to talk to someone about pricing", path: "/contact" }
-        ]
-      };
-    }
-    
-    if (query.toLowerCase().includes('calculate') || query.toLowerCase().includes('estimation')) {
-      return {
-        content: "Para sa price calculation, I need a few details:\n\n• Project type (residential, commercial, renovation)\n• Approximate size in square meters\n• Basic, Standard, or Premium finish\n\nKindly share these details para I can give you an estimate.",
-        buttons: []
-      };
-    }
-    
-    if (query.toLowerCase().includes('location') || query.toLowerCase().includes('address') || query.toLowerCase().includes('map')) {
-      return {
-        content: "Our main office is located at: Block 8 Lot 7 Phase 2 Gregory Street, St. Joseph Village, 7 Marinig, Cabuyao, 4025 Laguna. We're open Monday-Friday, 8am-5pm.",
-        buttons: [
-          { text: "Get Directions", action: "I need directions" },
-          { text: "Contact Us", action: "Go to contact page", path: "/contact" }
-        ]
-      };
-    }
-    
-    if (query.toLowerCase().includes('service') || query.toLowerCase().includes('offer')) {
-      return {
-        content: "At Rodelas Construction Services, we offer various construction services including:\n\n• Commercial Construction\n• Residential Construction\n• Renovation & Remodeling\n• Construction Management\n\nWould you like to know more about any specific service?",
-        buttons: [
-          { text: "View All Services", action: "Go to services page", path: "/services" },
-          { text: "Commercial", action: "Tell me about commercial construction" },
-          { text: "Residential", action: "Tell me about residential construction" }
-        ]
-      };
-    }
-    
-    if (query.toLowerCase().includes('project') || query.toLowerCase().includes('portfolio') || query.toLowerCase().includes('past work')) {
-      return {
-        content: "We have completed numerous successful projects across various categories including commercial buildings, residential complexes, renovations, and more. Would you like to see our project portfolio?",
-        buttons: [
-          { text: "View Projects", action: "Go to projects page", path: "/projects" },
-          { text: "Commercial Projects", action: "Show me your commercial projects", path: "/projects" },
-          { text: "Residential Projects", action: "Show me your residential projects", path: "/projects" }
-        ]
-      };
-    }
-    
-    return null;
-  };
+  // Removed getCompanyInfo function entirely to rely on the LLM
   
   const processCalculation = (query: string) => {
     const numberMatch = query.match(/\d+/);
@@ -157,24 +73,44 @@ const ChatBot = () => {
     
     let baseRate = 0;
     let projectType = "";
+    let finishType = "standard";
     
+    // Determine project type
     if (query.toLowerCase().includes('residential')) {
-      baseRate = 45000;
       projectType = "residential construction";
+      if (query.toLowerCase().includes('premium')) {
+        baseRate = 65000;
+        finishType = "premium";
+      } else if (query.toLowerCase().includes('basic')) {
+        baseRate = 40000;
+        finishType = "basic";
+      } else {
+        baseRate = 50000;
+      }
     } else if (query.toLowerCase().includes('commercial')) {
-      baseRate = 58000;
       projectType = "commercial construction";
+      if (query.toLowerCase().includes('premium')) {
+        baseRate = 75000;
+        finishType = "premium";
+      } else if (query.toLowerCase().includes('basic')) {
+        baseRate = 50000;
+        finishType = "basic";
+      } else {
+        baseRate = 60000;
+      }
     } else if (query.toLowerCase().includes('renovation') || query.toLowerCase().includes('remodel')) {
-      baseRate = 25000;
       projectType = "renovation";
+      if (query.toLowerCase().includes('premium')) {
+        baseRate = 40000;
+        finishType = "premium";
+      } else if (query.toLowerCase().includes('basic')) {
+        baseRate = 20000;
+        finishType = "basic";
+      } else {
+        baseRate = 30000;
+      }
     } else {
       return null;
-    }
-    
-    if (query.toLowerCase().includes('premium')) {
-      baseRate *= 1.3;
-    } else if (query.toLowerCase().includes('basic')) {
-      baseRate *= 0.8;
     }
     
     const estimate = baseRate * sqm;
@@ -184,9 +120,10 @@ const ChatBot = () => {
     }).format(estimate);
     
     return {
-      content: `Based on your ${sqm} sqm ${projectType} project, the estimated cost would be around ${formattedEstimate}. Note that this is just an initial estimate. For a more accurate quotation, we'd be happy to have our team assess your specific requirements. Would you like to discuss your project with us?`,
+      content: `Based on your requirements:\n\n• Project Type: ${projectType}\n• Floor Area: ${sqm} sqm\n• Finish Type: ${finishType}\n\nThe estimated cost would be around ${formattedEstimate}.\n\nNote: This is an initial estimate. Actual costs may vary based on:\n• Specific design requirements\n• Material selections\n• Site conditions\n• Timeline requirements\n\nWould you like to schedule a consultation for a detailed quotation?`,
       buttons: [
         { text: "Schedule Consultation", action: "I want to schedule a consultation", path: "/contact" },
+        { text: "Modify Estimate", action: "I want to try different specifications" },
         { text: "Learn More", action: "Tell me more about your services", path: "/services" }
       ]
     };
@@ -195,24 +132,75 @@ const ChatBot = () => {
   const handleUserQuery = async (userQuery: string) => {
     setIsLoading(true);
 
-    const companyInfoResponse = getCompanyInfo(userQuery);
-    const calculationResponse = processCalculation(userQuery);
+    // Simple greetings
+    if (userQuery.toLowerCase().match(/^(hi|hello|hey|kumusta|hi po|hello po)$/)) {
+      setMessages(prev => [...prev, { 
+        content: "Hi! How can I help you today?", 
+        isBot: true, 
+        timestamp: new Date(),
+        buttons: [
+          { text: "Services", action: "What are your services?", path: "/services" },
+          { text: "Get Quote", action: "I need a quote", path: "/contact" }
+        ]
+      }]);
+      setIsLoading(false);
+      return;
+    }
+
+    // Handle unclear responses
+    if (userQuery.toLowerCase().includes('hindi ko gets') || 
+        userQuery.toLowerCase().includes('di ko maintindihan') ||
+        userQuery.toLowerCase().includes('ano ulit')) {
+      setMessages(prev => [...prev, { 
+        content: "Let me help you better. What specific service do you need?", 
+        isBot: true, 
+        timestamp: new Date(),
+        buttons: [
+          { text: "Installation", action: "Installation services" },
+          { text: "Renovation", action: "Renovation services" },
+          { text: "Construction", action: "Construction services" }
+        ]
+      }]);
+      setIsLoading(false);
+      return;
+    }
     
-    if (companyInfoResponse || calculationResponse) {
-      const response = companyInfoResponse || calculationResponse;
+    // Check specifically for calculation requests first
+    const calculationResponse = processCalculation(userQuery);
+    if (calculationResponse) {
       setTimeout(() => {
         setMessages(prev => [...prev, { 
-          content: response!.content, 
+          content: calculationResponse.content, 
           isBot: true, 
           timestamp: new Date(),
-          buttons: response!.buttons
+          buttons: calculationResponse.buttons
         }]);
         setIsLoading(false);
       }, 1000);
       return;
     }
 
+    // Removed the getCompanyInfo check here to prioritize LLM call
+
     try {
+      // Prepare conversation history for the API
+      const history = messages.slice(-5).map(msg => ({ // Send last 5 messages
+        role: msg.isBot ? "model" : "user",
+        parts: [{ text: msg.content }]
+      }));
+
+      // Add the current user query to the history
+      history.push({
+        role: "user",
+        parts: [{ text: userQuery }]
+      });
+      
+      // Remove the last user message from history if it's the same as the current query (to avoid duplication if called via button)
+      if (history.length > 1 && history[history.length - 2].role === "user" && history[history.length - 2].parts[0].text === userQuery) {
+        history.splice(history.length - 2, 1);
+      }
+
+
       const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent', {
         method: 'POST',
         headers: {
@@ -220,34 +208,54 @@ const ChatBot = () => {
           'x-goog-api-key': apiKey
         },
         body: JSON.stringify({
-          contents: [
-            {
-              role: "user",
-              parts: [
-                {
-                  text: `You are the AI assistant for Rodelas Construction Services (RCS). Key information:
-                  
-                  Company Info:
-                  - Founded by Engr. Arnold Rodelas in 2010
-                  - Specializes in commercial construction, residential construction, renovation & remodeling
-                  - Known for quality workmanship and professional service
-                  - Based in Cabuyao, Laguna
-                  
-                  Communication Style:
-                  1. Use conversational Taglish (70% English, 30% Tagalog)
-                  2. Be professional but friendly
-                  3. Show expertise in construction
-                  4. Highlight RCS's experience and capabilities
-                  5. Always aim to move the conversation towards a consultation or quote
-                  
-                  Now answer this query in the style described: ${userQuery}`
-                }
-              ]
-            }
-          ],
+          // Send conversation history
+          contents: history, 
+          // System instruction to guide the model
+          systemInstruction: { 
+            role: "system",
+            parts: [{
+              text: `You are the AI assistant for Rodelas Construction Services (RCS). Key information:
+              
+              Company Info:
+              - Founded by Engr. Arnold Rodelas in 2010
+              - Specializes in commercial construction, residential construction, renovation & remodeling
+              - Known for quality workmanship and professional service
+              - Based in Cabuyao, Laguna (Block 8 Lot 7 Phase 2 Gregory Street, St. Joseph Village, 7 Marinig, Cabuyao, 4025 Laguna)
+              - Contact: Globe: 09670598903/09951858305, Landline: 049-547-0926, Email: engineeringdreams.rcs@gmail.com
+              - Office Hours: Mon-Fri 8AM-6PM, Sat 9AM-2PM
+              
+              Services & Pricing (Estimates):
+              - Residential Construction: Basic ₱35k-45k/sqm, Standard ₱45k-55k/sqm, Premium ₱55k-75k/sqm
+              - Commercial Construction: Basic ₱45k-55k/sqm, Standard ₱55k-65k/sqm, Premium ₱65k-85k/sqm
+              - Renovation: Basic ₱15k-25k/sqm, Standard ₱25k-35k/sqm, Premium ₱35k-45k/sqm
+              - Installation: Aircon, fixtures, etc. (Needs details for quote)
+              - Painting: Needs site visit for quote.
+              - Design & Planning: Architectural, Interior, 3D Viz, Permits.
+              
+              Quote Process:
+              - For renovation, painting, or complex projects, ALWAYS state that a site visit is needed for an accurate quote and that the visit is FREE. Offer to schedule the visit or provide contact info.
+              - For simple installations (like aircon), ask for necessary details (type, room size, location).
+              - For construction estimates, ask for Project Type, Floor Area (sqm), Finish Type (Basic/Standard/Premium), and Special Requirements.
+              
+              Communication Style Guidelines:
+              1. Use 80% English, 20% Taglish (minimal, basic words like 'po', 'opo', 'sige').
+              2. Keep responses SHORT and DIRECT (1-3 sentences usually).
+              3. Be professional, friendly, and helpful.
+              4. Use the provided conversation history to understand context and avoid repetition. If the user confirms something (e.g., "yes" to a quote offer), proceed to the next step (e.g., ask for details or offer to schedule a visit).
+              5. If unsure, ask clarifying questions or offer to connect the user with a human agent via the contact page or phone number.
+              
+              Example GOOD flow:
+              User: Magkano parenovate ng bahay?
+              Bot: For house renovation po, we need to check the area first to give an accurate quote. The site inspection is free. Would you like to schedule a visit? [Button: Schedule Visit] [Button: Call Us]
+              User: yes
+              Bot: Okay po. Please provide your contact details on our contact page, or you can call us directly to schedule the free site visit. [Button: Contact Page] [Button: Call Now]
+              
+              Now, respond to the latest user message based on the conversation history.`
+            }]
+          },
           generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 800
+            temperature: 0.6, // Slightly lower temperature for more predictable responses
+            maxOutputTokens: 400
           }
         })
       });
@@ -259,38 +267,25 @@ const ChatBot = () => {
       const data = await response.json();
       
       let botResponse = "I apologize, but I couldn't process your request. Please try again or contact us directly.";
-      let buttons: Array<{text: string, action: string, path?: string}> = [];
       
-      if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+      // Check structure carefully before accessing parts
+      if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
         botResponse = data.candidates[0].content.parts[0].text;
         
-        if (botResponse.toLowerCase().includes('service')) {
-          buttons.push({ text: "View Services", action: "Tell me more about your services", path: "/services" });
-        }
-        if (botResponse.toLowerCase().includes('contact') || botResponse.toLowerCase().includes('email') || botResponse.toLowerCase().includes('call')) {
-          buttons.push({ text: "Contact Us", action: "I want to get in touch", path: "/contact" });
-        }
-        if (botResponse.toLowerCase().includes('project') || botResponse.toLowerCase().includes('portfolio')) {
-          buttons.push({ text: "Our Projects", action: "Show me your projects", path: "/projects" });
-        }
-        if (botResponse.toLowerCase().includes('quote') || botResponse.toLowerCase().includes('cost') || botResponse.toLowerCase().includes('price')) {
-          buttons.push({ text: "Get Quote", action: "I need a quote for my project", path: "/contact" });
-        }
-        if (botResponse.toLowerCase().includes('consult') || botResponse.toLowerCase().includes('meet') || botResponse.toLowerCase().includes('discuss')) {
-          buttons.push({ text: "Schedule Consultation", action: "I want to schedule a consultation", path: "/contact" });
-        }
+        // Removed aggressive length limiter
+        // Removed automatic button generation based on response keywords
       }
 
       setMessages(prev => [...prev, { 
         content: botResponse, 
         isBot: true, 
         timestamp: new Date(),
-        buttons: buttons.length > 0 ? buttons : undefined
+        buttons: undefined // Let the AI generate suggestions within its text response
       }]);
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error fetching AI response:', error); // Log the specific error
       setMessages(prev => [...prev, { 
-        content: "I'm having trouble connecting right now. Please try again or contact us directly at 09670598903 or engineeringdreams.rcs@gmail.com", 
+        content: "Sorry, may problem po. Please contact us at 09670598903 or engineeringdreams.rcs@gmail.com", 
         isBot: true, 
         timestamp: new Date(),
         buttons: [

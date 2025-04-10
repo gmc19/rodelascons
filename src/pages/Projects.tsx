@@ -29,23 +29,75 @@ interface Project {
 
 const projects: Project[] = [
   {
-    id: "project-1",
-    title: "Modern Office Building",
+    id: "jezelle-fashion",
+    title: "Jezelle HauteAmorado Fashion Boutique",
     category: "Commercial",
-    location: "Downtown Business District, CA",
-    completionDate: "June 2022",
-    description: "A state-of-the-art 12-story office building featuring energy-efficient design, collaborative workspaces, and a stunning glass facade. This project was completed on time and within budget, meeting all sustainability requirements.",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
-    galleryImages: ["https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80"],
-    features: [
-      { title: "Energy Efficiency", description: "LEED Gold certified with advanced energy management systems" },
-      { title: "Smart Building Technology", description: "Integrated IoT sensors for climate and usage optimization" },
-      { title: "Sustainable Materials", description: "Over 60% recycled or locally sourced building materials" }
+    location: "Chino Roces, Makati",
+    completionDate: "2024",
+    description: "We proudly present the successful completion of the Jezelle HauteAmorado Fashion Boutique, located at Chino Roces, Makati. This project involved a full commercial interior fit-out tailored to the brand identity and functionality of a fashion design business. With a clean glass façade, modern branding integration, and strategic layout design, the boutique was designed to elevate the client's professional presence while providing a functional workspace for creative expression.",
+    image: "/images/projects/commercial/jezelle_fashion/4.jpg",
+    galleryImages: [
+      "/images/projects/commercial/jezelle_fashion/2.jpg",
+      "/images/projects/commercial/jezelle_fashion/3.jpg",
+      "/images/projects/commercial/jezelle_fashion/4.jpg",
+      "/images/projects/commercial/jezelle_fashion/5.jpg",
+      "/images/projects/commercial/jezelle_fashion/6.jpg",
+      "/images/projects/commercial/jezelle_fashion/7.jpg"
     ],
-    client: "TechCorp Innovations",
-    highlights: ["Completed 2 months ahead of schedule", "Zero safety incidents", "14% under budget"],
-    tags: ["Office", "Glass Facade", "LEED Certified", "Smart Building"]
-  }, {
+    features: [
+      { title: "Commercial Interior Design", description: "Full commercial space interior design and build implementation" },
+      { title: "Glass Installation", description: "Glass partition installation with custom branding decals" },
+      { title: "Structural Work", description: "Professional structural framing and finishing" },
+      { title: "Custom Fixtures", description: "Custom lighting and flooring adjustments for optimal retail environment" },
+      { title: "Display Setup", description: "Boutique display-ready preparation for immediate business use" }
+    ],
+    client: "Jezelle HauteAmorado",
+    highlights: [
+      "Modern glass façade design",
+      "Brand-integrated interior layout",
+      "Functional retail workspace",
+      "Professional business environment"
+    ],
+    tags: ["Commercial", "Interior Fit-Out", "Retail Space", "Boutique"]
+  },
+  {
+    id: "racha-project",
+    title: "The Racha Project",
+    category: "Residential",
+    location: "Silang, Cavite",
+    completionDate: "2024",
+    description: "At Rodelas Construction Services, we turn your vision into reality. The Racha Project is one of our most refined residential builds — combining modern elegance with functionality. Every detail, from the structure to the finishes, was thoughtfully designed and constructed to reflect the lifestyle and comfort of its future homeowners.",
+    image: "/images/projects/residential/racha_project/1.jpg",
+    galleryImages: [
+      "/images/projects/residential/racha_project/2.jpg",
+      "/images/projects/residential/racha_project/3.jpg",
+      "/images/projects/residential/racha_project/4.jpg",
+      "/images/projects/residential/racha_project/5.jpg",
+      "/images/projects/residential/racha_project/6.jpg",
+      "/images/projects/residential/racha_project/7.jpg",
+      "/images/projects/residential/racha_project/8.jpg",
+      "/images/projects/residential/racha_project/9.jpg",
+      "/images/projects/residential/racha_project/10.jpg",
+      "/images/projects/residential/racha_project/11.jpg",
+      "/images/projects/residential/racha_project/12.jpg",
+      "/images/projects/residential/racha_project/13.jpg",
+      "/images/projects/residential/racha_project/14.jpg",
+      "/images/projects/residential/racha_project/15.jpg",
+      "/images/projects/residential/racha_project/16.jpg",
+      "/images/projects/residential/racha_project/17.jpg",
+      "/images/projects/residential/racha_project/18.jpg"
+    ],
+    features: [
+      { title: "Full Residential Construction", description: "Complete turnkey construction from foundation to finishing" },
+      { title: "Architectural Design", description: "Custom architectural and structural design implementation" },
+      { title: "Systems Integration", description: "Comprehensive electrical and plumbing systems installation" },
+      { title: "Premium Finishes", description: "High-quality interior and exterior finishing touches" }
+    ],
+    client: "Racha Family",
+    highlights: ["Modern elegant design", "Functional living spaces", "Premium quality finishes"],
+    tags: ["Residential", "Custom Home", "Modern Design", "Luxury Finishes"]
+  },
+  {
     id: "project-2",
     title: "Cassasis Residential Building",
     category: "Residential",
@@ -67,15 +119,7 @@ const projects: Project[] = [
     highlights: ["Turnkey project delivery", "Custom design elements", "Satisfied homeowner testimonial"],
     tags: ["Residential", "Custom Home", "Luxury Finishes", "Modern Design"]
   }, {
-    id: "project-3",
-    title: "Shopping Mall Renovation",
-    category: "Renovation",
-    location: "Central Mall, CA",
-    completionDate: "January 2023",
-    description: "Complete renovation of a 25-year-old shopping mall, including modernization of interiors, expansion of retail spaces, and implementation of energy-efficient systems. The project was completed while maintaining partial operation of the facility.",
-    image: "https://images.unsplash.com/photo-1555443805-658637491dd4?auto=format&fit=crop&w=800&q=80",
-    galleryImages: ["https://images.unsplash.com/photo-1581417478175-a9ef18f210c2?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1581539250439-c96689b516dd?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1610904303847-701fec48d80b?auto=format&fit=crop&w=800&q=80"]
-  }, {
+    
     id: "project-4",
     title: "Industrial Warehouse",
     category: "Industrial",
@@ -94,14 +138,38 @@ const projects: Project[] = [
     image: "https://images.unsplash.com/photo-1545079968-1feb95494244?auto=format&fit=crop&w=800&q=80",
     galleryImages: ["https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1497366858526-0766cadbe8fa?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?auto=format&fit=crop&w=800&q=80"]
   }, {
-    id: "project-6",
-    title: "Luxury Villa",
-    category: "Residential",
-    location: "Hillside Estates, CA",
-    completionDate: "July 2021",
-    description: "A custom-designed luxury villa featuring high-end finishes, smart home integration, infinity pool, and panoramic views. This project highlights our expertise in luxury residential construction.",
-    image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80",
-    galleryImages: ["https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=800&q=80"]
+
+    id: "south-forbes-villas",
+    title: "South Forbes Villas",
+    category: "Renovation",
+    location: "South Forbes Villas",
+    completionDate: "2024",
+    description: "We've successfully completed a full residential renovation and repaint project in the elegant community of South Forbes Villas. This project focused on refreshing the exterior and interior of the home, giving it a clean, modern, and revitalized look while maintaining its classic architectural character. Careful attention was given to surface preparation, paint application, and detail finishing to ensure high-quality results and long-term durability.",
+    image: "/images/projects/renovation/southforbes/1.jpg",
+    galleryImages: [
+      "/images/projects/renovation/southforbes/2.jpg",
+      "/images/projects/renovation/southforbes/3.jpg",
+      "/images/projects/renovation/southforbes/4.jpg",
+      "/images/projects/renovation/southforbes/5.jpg",
+      "/images/projects/renovation/southforbes/6.jpg",
+      "/images/projects/renovation/southforbes/7.jpg",
+      "/images/projects/renovation/southforbes/8.jpg"
+    ],
+    features: [
+      { title: "Complete Repainting", description: "Full interior and exterior repainting service" },
+      { title: "Surface Restoration", description: "Thorough surface preparation and repair work" },
+      { title: "Detail Finishing", description: "Meticulous work on trims and moldings" },
+      { title: "Interior Enhancement", description: "Comprehensive ceiling and wall touch-ups" },
+      { title: "General Refurbishment", description: "Overall interior improvement and renovation" }
+    ],
+    client: "South Forbes Villas Residence",
+    highlights: [
+      "Modern and revitalized look",
+      "High-quality paint application",
+      "Long-term durability focus",
+      "Classic character preservation"
+    ],
+    tags: ["Renovation", "Residential", "Home Improvement", "Repainting"]
   }
 ];
 
@@ -177,24 +245,24 @@ const Projects = () => {
       <div className="pt-24 pb-20 bg-gradient-to-r from-rcs-blue to-rcs-blue/80">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-5xl text-white mb-6 shadow-text md:text-5xl font-bold">Our Projects</h1>
-            <p className="text-xl text-white/90 shadow-text md:text-xl font-normal">
+            <h1 className="text-3xl md:text-5xl text-white mb-4 md:mb-6 shadow-text font-bold">Our Projects</h1>
+            <p className="text-base md:text-xl text-white/90 shadow-text font-normal">
               Explore our portfolio of successful construction projects that demonstrate our expertise and commitment to excellence.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="py-12 bg-gradient-to-b from-gray-50 to-white">
+      <div className="py-8 md:py-12 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="flex justify-center mb-8">
+          <div className="flex justify-center mb-6 md:mb-8">
             <div className="flex flex-wrap justify-center gap-2">
               {categories.map(category => (
                 <Button 
                   key={category} 
                   onClick={() => setSelectedCategory(category)} 
                   variant={selectedCategory === category ? "default" : "outline"}
-                  className={`px-5 py-6 rounded-md transition-all duration-300 font-bold text-lg ${
+                  className={`px-3 md:px-5 py-4 md:py-6 rounded-md transition-all duration-300 font-bold text-sm md:text-lg ${
                     selectedCategory === category 
                       ? 'bg-rcs-blue text-white shadow-md scale-105' 
                       : 'bg-white text-rcs-blue hover:bg-gray-100 border border-gray-200'
@@ -206,7 +274,7 @@ const Projects = () => {
             </div>
           </div>
 
-          <div className="space-y-12 mt-8">
+          <div className="space-y-8 md:space-y-12 mt-6 md:mt-8">
             {filteredProjects.map(project => (
               <motion.div
                 key={project.id}
@@ -245,36 +313,36 @@ const Projects = () => {
                       </div>
                     </div>
                     
-                    <CardContent className="p-6 lg:p-8 flex flex-col justify-between">
+                    <CardContent className="p-4 md:p-8 flex flex-col justify-between">
                       <div>
-                        <h3 className="text-2xl md:text-3xl font-bold text-rcs-blue mb-3">{project.title}</h3>
+                        <h3 className="text-xl md:text-3xl font-bold text-rcs-blue mb-2 md:mb-3">{project.title}</h3>
                         
-                        <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
+                        <div className="flex flex-wrap gap-3 text-xs md:text-sm text-gray-500 mb-3 md:mb-4">
                           <div className="flex items-center">
-                            <MapPin size={16} className="mr-1 text-rcs-gold" />
+                            <MapPin size={14} className="mr-1 text-rcs-gold" />
                             <span>{project.location}</span>
                           </div>
                           <div className="flex items-center">
-                            <CalendarDays size={16} className="mr-1 text-rcs-gold" />
+                            <CalendarDays size={14} className="mr-1 text-rcs-gold" />
                             <span>Completed: {project.completionDate}</span>
                           </div>
                           {project.client && (
                             <div className="flex items-center">
-                              <Award size={16} className="mr-1 text-rcs-gold" />
+                              <Award size={14} className="mr-1 text-rcs-gold" />
                               <span>Client: {project.client}</span>
                             </div>
                           )}
                         </div>
                         
-                        <p className="text-gray-700 mb-6">
+                        <p className="text-sm md:text-base text-gray-700 mb-4 md:mb-6">
                           {expandedProject === project.id ? project.description : `${project.description.substring(0, 150)}${project.description.length > 150 ? '...' : ''}`}
                         </p>
                         
                         {project.tags && (
-                          <div className="flex flex-wrap gap-2 mb-6">
+                          <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
                             {project.tags.map((tag, index) => (
-                              <Badge key={index} variant="outline" className="bg-gray-100 text-gray-700 hover:bg-gray-200">
-                                <Tag size={12} className="mr-1" />
+                              <Badge key={index} variant="outline" className="text-xs md:text-sm bg-gray-100 text-gray-700 hover:bg-gray-200">
+                                <Tag size={10} className="mr-1" />
                                 {tag}
                               </Badge>
                             ))}
@@ -309,10 +377,10 @@ const Projects = () => {
                           <hr className="my-6 border-gray-200" />
                           
                           <Tabs value={activeSectionTab} onValueChange={setActiveSectionTab} className="w-full">
-                            <TabsList className="grid w-full grid-cols-3 mb-8">
-                              <TabsTrigger value="gallery" className="text-lg">Project Gallery</TabsTrigger>
-                              <TabsTrigger value="details" className="text-lg">Project Details</TabsTrigger>
-                              <TabsTrigger value="features" className="text-lg">Features & Highlights</TabsTrigger>
+                            <TabsList className="grid w-full grid-cols-3 mb-6 md:mb-8">
+                              <TabsTrigger value="gallery" className="text-sm md:text-lg">Project Gallery</TabsTrigger>
+                              <TabsTrigger value="details" className="text-sm md:text-lg">Project Details</TabsTrigger>
+                                <TabsTrigger value="features" className="text-sm md:text-lg">Features</TabsTrigger>
                             </TabsList>
                             
                             <TabsContent value="gallery" className="mt-0">
@@ -323,14 +391,14 @@ const Projects = () => {
                             </TabsContent>
                             
                             <TabsContent value="details" className="mt-0">
-                              <div className="bg-gray-50 rounded-lg p-6 shadow-inner">
-                                <h4 className="text-xl font-bold text-rcs-blue mb-4">About This Project</h4>
-                                <p className="text-gray-700 whitespace-pre-line">{project.description}</p>
+                              <div className="bg-gray-50 rounded-lg p-4 md:p-6 shadow-inner">
+                                <h4 className="text-lg md:text-xl font-bold text-rcs-blue mb-3 md:mb-4">About This Project</h4>
+                                <p className="text-sm md:text-base text-gray-700 whitespace-pre-line">{project.description}</p>
                                 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                                  <div className="bg-white rounded-lg p-5 shadow-sm">
-                                    <h5 className="font-bold text-lg mb-3 text-rcs-blue">Project Information</h5>
-                                    <ul className="space-y-3">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-6 md:mt-8">
+                                  <div className="bg-white rounded-lg p-4 md:p-5 shadow-sm">
+                                    <h5 className="font-bold text-base md:text-lg mb-3 text-rcs-blue">Project Information</h5>
+                                    <ul className="space-y-2 md:space-y-3 text-sm md:text-base">
                                       <li className="flex items-center">
                                         <CircleDot size={16} className="text-rcs-gold mr-2" />
                                         <span className="font-semibold">Category:</span>
@@ -357,11 +425,11 @@ const Projects = () => {
                                   </div>
                                   
                                   {project.tags && (
-                                    <div className="bg-white rounded-lg p-5 shadow-sm">
-                                      <h5 className="font-bold text-lg mb-3 text-rcs-blue">Project Tags</h5>
+                                    <div className="bg-white rounded-lg p-4 md:p-5 shadow-sm">
+                                      <h5 className="font-bold text-base md:text-lg mb-3 text-rcs-blue">Project Tags</h5>
                                       <div className="flex flex-wrap gap-2">
                                         {project.tags.map((tag, index) => (
-                                          <Badge key={index} className="bg-gray-100 text-gray-700 hover:bg-gray-200">
+                                          <Badge key={index} className="text-xs md:text-sm bg-gray-100 text-gray-700 hover:bg-gray-200">
                                             {tag}
                                           </Badge>
                                         ))}
@@ -375,13 +443,13 @@ const Projects = () => {
                             <TabsContent value="features" className="mt-0">
                               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                                 {project.features && (
-                                  <div className="bg-gray-50 rounded-lg p-6 shadow-inner">
-                                    <h4 className="text-xl font-bold text-rcs-blue mb-4">Key Features</h4>
-                                    <ul className="space-y-4">
+                                  <div className="bg-gray-50 rounded-lg p-4 md:p-6 shadow-inner">
+                                    <h4 className="text-lg md:text-xl font-bold text-rcs-blue mb-3 md:mb-4">Key Features</h4>
+                                    <ul className="space-y-3 md:space-y-4">
                                       {project.features.map((feature, index) => (
-                                        <li key={index} className="bg-white rounded-md p-4 shadow-sm">
-                                          <h5 className="font-bold text-rcs-blue">{feature.title}</h5>
-                                          <p className="text-gray-700">{feature.description}</p>
+                                        <li key={index} className="bg-white rounded-md p-3 md:p-4 shadow-sm">
+                                          <h5 className="font-bold text-base md:text-lg text-rcs-blue mb-1">{feature.title}</h5>
+                                          <p className="text-sm md:text-base text-gray-700">{feature.description}</p>
                                         </li>
                                       ))}
                                     </ul>
@@ -389,8 +457,8 @@ const Projects = () => {
                                 )}
                                 
                                 {project.highlights && (
-                                  <div className="bg-gray-50 rounded-lg p-6 shadow-inner">
-                                    <h4 className="text-xl font-bold text-rcs-blue mb-4">Project Highlights</h4>
+                                  <div className="bg-gray-50 rounded-lg p-4 md:p-6 shadow-inner">
+                                    <h4 className="text-lg md:text-xl font-bold text-rcs-blue mb-3 md:mb-4">Project Highlights</h4>
                                     <ul className="space-y-2">
                                       {project.highlights.map((highlight, index) => (
                                         <li key={index} className="flex items-start">

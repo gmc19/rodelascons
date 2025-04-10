@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react';
+import { Phone, PhoneCall, Mail, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -86,23 +86,23 @@ const Footer = () => {
             <h3 className="text-xl font-montserrat font-bold mb-4 text-rcs-gold">Contact</h3>
             <ul className="space-y-3">
               <li className="flex items-start">
-                <MapPin size={18} className="mr-2 mt-1 text-rcs-gold" />
-                <span>Block 8 Lot 7 Phase 2 Gregory Street, St. Joseph Village, 7 Marinig, Cabuyao, 4025 Laguna</span>
+                <MapPin size={24} className="mr-2 mt-1 flex-shrink-0 text-rcs-gold" />
+                <span className="flex-1">Block 8 Lot 7 Phase 2 Gregory Street, St. Joseph Village, 7 Marinig, Cabuyao, 4025 Laguna</span>
               </li>
               <li className="flex items-center">
-                <Phone size={18} className="mr-2 text-rcs-gold" />
+                <Phone size={20} className="mr-2 flex-shrink-0 text-rcs-gold" />
                 <a href="tel:+639670598903" className="hover:text-rcs-gold transition-colors duration-200">
                   Globe: 09670598903/09951858305
                 </a>
               </li>
               <li className="flex items-center">
-                <Phone size={18} className="mr-2 text-rcs-gold" />
+                <PhoneCall size={20} className="mr-2 flex-shrink-0 text-rcs-gold" />
                 <a href="tel:+63495470926" className="hover:text-rcs-gold transition-colors duration-200">
                   Landline: 049-547-0926
                 </a>
               </li>
               <li className="flex items-center">
-                <Mail size={18} className="mr-2 text-rcs-gold" />
+                <Mail size={20} className="mr-2 flex-shrink-0 text-rcs-gold" />
                 <a href="mailto:engineeringdreams.rcs@gmail.com" className="hover:text-rcs-gold transition-colors duration-200">
                   engineeringdreams.rcs@gmail.com
                 </a>

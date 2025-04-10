@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ExternalLink } from 'lucide-react';
@@ -16,40 +15,28 @@ interface Project {
 
 const projects: Project[] = [
   {
-    id: "project-1",
-    title: "Modern Office Building",
-    category: "Commercial",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"
+    id: "south-forbes-villas",
+    title: "South Forbes Villas",
+    category: "Renovation",
+    image: "/images/projects/renovation/southforbes/1.jpg"
   },
   {
-    id: "project-2",
+    id: "jezelle-fashion",
+    title: "Jezelle HauteAmorado Fashion Boutique",
+    category: "Commercial",
+    image: "/images/projects/commercial/jezelle_fashion/4.jpg"
+  },
+  {
+    id: "racha-project",
+    title: "The Racha Project",
+    category: "Residential",
+    image: "/images/projects/residential/racha_project/1.jpg"
+  },
+  {
+    id: "cassasis-residential",
     title: "Cassasis Residential Building",
     category: "Residential",
     image: "/images/projects/residential/cassasis_residential/main.jpg"
-  },
-  {
-    id: "project-3",
-    title: "Shopping Mall Renovation",
-    category: "Renovation",
-    image: "https://images.unsplash.com/photo-1555443805-658637491dd4?auto=format&fit=crop&w=800&q=80"
-  },
-  {
-    id: "project-4",
-    title: "Industrial Warehouse",
-    category: "Industrial",
-    image: "https://images.unsplash.com/photo-1616832880334-b1904551ccdd?auto=format&fit=crop&w=800&q=80"
-  },
-  {
-    id: "project-5",
-    title: "Corporate Headquarters",
-    category: "Commercial",
-    image: "https://images.unsplash.com/photo-1545079968-1feb95494244?auto=format&fit=crop&w=800&q=80"
-  },
-  {
-    id: "project-6",
-    title: "Luxury Villa",
-    category: "Residential",
-    image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80"
   }
 ];
 

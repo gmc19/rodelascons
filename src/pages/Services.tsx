@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Building, Home, PenTool, BarChart3, Wrench, Ruler, HardHat, Truck, ChevronDown, Info, Clock, Users, Search, CheckSquare, ArrowRight, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -553,150 +552,226 @@ const Services = () => {
     { id: "management", name: "Management & Planning" }
   ];
 
-  const services = [
+  const services: ServiceProps[] = [
     {
-      icon: <Building size={32} />,
-      title: "Commercial Construction",
-      description: "Comprehensive commercial construction services for businesses of all sizes, from small retail spaces to large office buildings.",
+      icon: <Building size={24} />,
+      title: "House Construction",
+      description: "Complete construction services for residential properties, including 2-storey houses in premium locations like South Forbes, Silang Cavite. We handle everything from foundation to finishing touches.",
       features: [
-        "Custom office buildings and retail spaces",
-        "Industrial and manufacturing facilities",
-        "Healthcare and institutional buildings",
-        "Restaurant and hospitality construction"
+        "Custom house design and planning",
+        "Quality materials and workmanship",
+        "Strict adherence to building codes",
+        "Timely project completion",
+        "Regular progress updates"
       ],
       benefits: [
+        "Expert project management",
+        "Skilled workforce",
+        "Modern construction techniques",
+        "Comprehensive warranty",
+        "After-construction support"
+      ],
+      category: "construction"
+    },
+    {
+      icon: <Wrench size={24} />,
+      title: "Carpentry",
+      description: "Professional carpentry services for both structural and decorative elements, ensuring precision and durability in every project.",
+      features: [
+        "Custom furniture and cabinetry",
+        "Wooden flooring installation",
+        "Door and window framing",
+        "Staircase construction",
+        "Wooden decking and pergolas"
+      ],
+      benefits: [
+        "High-quality materials",
+        "Precision craftsmanship",
+        "Custom designs",
+        "Durable finishes",
+        "Maintenance guidance"
+      ],
+      category: "finishing"
+    },
+    {
+      icon: <HardHat size={24} />,
+      title: "Masonry",
+      description: "Expert masonry work for foundations, walls, and other structural elements using high-quality materials and proven techniques.",
+      features: [
+        "Concrete work and foundations",
+        "Brick and block laying",
+        "Stone masonry",
+        "Retaining walls",
+        "Concrete finishing"
+      ],
+      benefits: [
+        "Structural integrity",
+        "Weather resistance",
+        "Long-lasting durability",
+        "Professional finishing",
+        "Code compliance"
+      ],
+      category: "construction"
+    },
+    {
+      icon: <Ruler size={24} />,
+      title: "Steel Works",
+      description: "Comprehensive steel fabrication and installation services for structural and architectural applications.",
+      features: [
+        "Structural steel framing",
+        "Metal roofing",
+        "Steel reinforcement",
+        "Metal fabrication",
+        "Steel finishing"
+      ],
+      benefits: [
+        "High strength-to-weight ratio",
+        "Durability and longevity",
+        "Fire resistance",
+        "Design flexibility",
+        "Low maintenance"
+      ],
+      category: "construction"
+    },
+    {
+      icon: <Home size={24} />,
+      title: "Renovation",
+      description: "Transform your existing space with our professional renovation services, from minor updates to complete makeovers.",
+      features: [
+        "Interior remodeling",
+        "Exterior upgrades",
+        "Space optimization",
+        "Modernization",
+        "Structural improvements"
+      ],
+      benefits: [
+        "Enhanced functionality",
+        "Improved aesthetics",
         "Increased property value",
-        "Enhanced business operations and efficiency",
-        "Modern, energy-efficient facilities",
-        "Compliance with all commercial building codes"
+        "Energy efficiency",
+        "Custom solutions"
       ],
-      category: "commercial"
+      category: "renovation"
     },
     {
-      icon: <Home size={32} />,
-      title: "Residential Construction",
-      description: "Quality residential construction services for custom homes, multi-family developments, and residential communities.",
+      icon: <PenTool size={24} />,
+      title: "Painting",
+      description: "Professional painting services for both interior and exterior surfaces, using high-quality paints and techniques.",
       features: [
-        "Custom home design and construction",
-        "Multi-family residential projects",
-        "Residential community development",
-        "Luxury home construction"
+        "Interior painting",
+        "Exterior painting",
+        "Surface preparation",
+        "Color consultation",
+        "Special finishes"
       ],
       benefits: [
-        "Personalized living spaces tailored to your needs",
-        "Energy-efficient designs that reduce utility costs",
-        "Quality craftsmanship that stands the test of time",
-        "Modern amenities that enhance comfort and convenience"
+        "Enhanced aesthetics",
+        "Protection from elements",
+        "Long-lasting finish",
+        "Professional application",
+        "Clean work environment"
       ],
-      category: "residential"
+      category: "finishing"
     },
     {
-      icon: <PenTool size={32} />,
-      title: "Renovation & Remodeling",
-      description: "Transform your existing spaces with our expert renovation and remodeling services for both residential and commercial properties.",
+      icon: <BarChart3 size={24} />,
+      title: "Building Ventilation",
+      description: "Expert installation and maintenance of ventilation systems to ensure optimal air quality and comfort.",
       features: [
-        "Kitchen and bathroom renovations",
-        "Office and commercial space remodeling",
-        "Home additions and expansions",
-        "Historic building restoration"
+        "Ventilation system design",
+        "Installation and maintenance",
+        "Air quality solutions",
+        "Energy-efficient systems",
+        "Regular maintenance"
       ],
       benefits: [
-        "Breathe new life into outdated spaces",
-        "Increase property value and marketability",
-        "Improve functionality and flow of spaces",
-        "Incorporate modern amenities while preserving character"
+        "Improved air quality",
+        "Energy efficiency",
+        "Reduced humidity",
+        "Better comfort",
+        "Health benefits"
       ],
-      category: "specialized"
+      category: "mechanical"
     },
     {
-      icon: <BarChart3 size={32} />,
-      title: "Construction Management",
-      description: "Professional management of your construction project from conception to completion, ensuring quality, timeliness, and cost efficiency.",
+      icon: <Wrench size={24} />,
+      title: "Plumbing",
+      description: "Comprehensive plumbing services for residential and commercial properties, ensuring reliable water supply and drainage systems.",
       features: [
-        "Project planning and scheduling",
-        "Budget development and management",
-        "Quality control and assurance",
-        "Risk assessment and mitigation"
+        "Pipe installation and repair",
+        "Fixture installation",
+        "Water heater services",
+        "Drain cleaning",
+        "Emergency repairs"
       ],
       benefits: [
-        "Reduced project delays and cost overruns",
-        "Single point of accountability",
-        "Improved communication between all parties",
-        "Expert handling of complex project requirements"
+        "Reliable water supply",
+        "Efficient drainage",
+        "Water conservation",
+        "Professional installation",
+        "24/7 emergency service"
       ],
-      category: "management"
+      category: "mechanical"
     },
     {
-      icon: <Wrench size={32} />,
-      title: "General Contracting",
-      description: "Comprehensive general contracting services with a focus on quality craftsmanship and attention to detail.",
+      icon: <HardHat size={24} />,
+      title: "Demolition",
+      description: "Safe and efficient demolition services for structures of all sizes, with proper waste management and site preparation.",
       features: [
-        "Subcontractor coordination and management",
-        "Permit acquisition and code compliance",
-        "Material procurement and management",
-        "Site preparation and cleanup"
+        "Structural demolition",
+        "Interior demolition",
+        "Debris removal",
+        "Site preparation",
+        "Safety compliance"
       ],
       benefits: [
-        "Streamlined project execution",
-        "Adherence to project timelines",
-        "Efficient resource allocation",
-        "Consistent quality control across all aspects"
+        "Safe execution",
+        "Efficient process",
+        "Proper waste disposal",
+        "Site preparation",
+        "Minimal disruption"
       ],
-      category: "management"
+      category: "demolition"
     },
     {
-      icon: <Ruler size={32} />,
-      title: "Design-Build Services",
-      description: "Integrated design-build services that streamline the construction process and ensure cohesive project execution.",
+      icon: <BarChart3 size={24} />,
+      title: "Electrical Works",
+      description: "Professional electrical installation and maintenance services, ensuring safe and efficient power distribution.",
       features: [
-        "Collaborative design process",
-        "Streamlined project delivery",
-        "Single-source responsibility",
-        "Cost and schedule optimization"
+        "Wiring installation",
+        "Panel upgrades",
+        "Lighting installation",
+        "Safety inspections",
+        "Emergency repairs"
       ],
       benefits: [
-        "Faster project completion",
-        "Reduced costs through efficiency",
-        "Better communication between design and construction teams",
-        "Greater innovation in problem-solving"
+        "Safe installation",
+        "Energy efficiency",
+        "Code compliance",
+        "Reliable power supply",
+        "Professional maintenance"
       ],
-      category: "specialized"
+      category: "electrical"
     },
     {
-      icon: <HardHat size={32} />,
-      title: "Infrastructure Development",
-      description: "Development of essential infrastructure including roads, bridges, utilities, and public facilities.",
+      icon: <BarChart3 size={24} />,
+      title: "Air-Conditioning",
+      description: "Expert installation and maintenance of air conditioning systems for optimal comfort and energy efficiency.",
       features: [
-        "Road and highway construction",
-        "Utility installation and upgrades",
-        "Site development and preparation",
-        "Environmental compliance"
+        "AC installation",
+        "System maintenance",
+        "Repair services",
+        "Energy-efficient solutions",
+        "Regular check-ups"
       ],
       benefits: [
-        "Improved community access and mobility",
-        "Enhanced public safety and quality of life",
-        "Support for economic growth and development",
-        "Sustainable infrastructure solutions"
+        "Optimal comfort",
+        "Energy savings",
+        "Improved air quality",
+        "Professional service",
+        "Extended system life"
       ],
-      category: "commercial"
-    },
-    {
-      icon: <Truck size={32} />,
-      title: "Site Development",
-      description: "Comprehensive site development services including land clearing, grading, and utility installation.",
-      features: [
-        "Land clearing and preparation",
-        "Grading and excavation",
-        "Drainage system installation",
-        "Utility connection and setup"
-      ],
-      benefits: [
-        "Properly prepared building sites for successful construction",
-        "Effective management of water runoff and drainage",
-        "Minimized environmental impact through careful planning",
-        "Efficient utility connections ready for future construction"
-      ],
-      category: "commercial"
+      category: "mechanical"
     }
   ];
 
