@@ -361,6 +361,9 @@ const ServiceComparisonTable = ({ services }: { services: ServiceProps[] }) => {
 };
 
 const RelatedServices = ({ currentCategory, services }: { currentCategory: string, services: ServiceProps[] }) => {
+  // State to manage which service details to show
+  const [selectedService, setSelectedService] = useState<ServiceProps | null>(null);
+  
   const relatedServices = services
     .filter(service => service.category === currentCategory)
     .slice(0, 3);
@@ -378,14 +381,86 @@ const RelatedServices = ({ currentCategory, services }: { currentCategory: strin
               <h4 className="font-bold text-rcs-blue">{service.title}</h4>
             </div>
             <p className="text-gray-600 text-sm mb-3 line-clamp-2">{service.description}</p>
-            <DialogTrigger asChild>
-              <Button variant="link" size="sm" className="text-rcs-blue p-0 flex items-center gap-1">
-                Learn more <ArrowRight size={14} />
-              </Button>
-            </DialogTrigger>
+            <Button 
+              variant="link" 
+              size="sm" 
+              className="text-rcs-blue p-0 flex items-center gap-1"
+              onClick={() => setSelectedService(service)}
+            >
+              Learn more <ArrowRight size={14} />
+            </Button>
           </div>
         ))}
       </div>
+      
+      {/* Dialog for displaying service details */}
+      {selectedService && (
+        <Dialog open={!!selectedService} onOpenChange={() => setSelectedService(null)}>
+          <DialogContent className="max-w-3xl">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <span className="text-rcs-blue">{selectedService.icon}</span>
+                {selectedService.title}
+              </DialogTitle>
+              <DialogDescription>
+                Comprehensive details about our {selectedService.title.toLowerCase()} services
+              </DialogDescription>
+            </DialogHeader>
+            
+            <div className="space-y-4">
+              <p className="text-gray-600">{selectedService.description}</p>
+              
+              <div>
+                <h4 className="font-bold text-rcs-blue mb-2">Key Features</h4>
+                <ul className="space-y-2 mb-4 pl-5">
+                  {selectedService.features.map((feature, index) => (
+                    <li key={index} className="flex items-start">
+                      <span className="text-rcs-gold mr-2">•</span>
+                      <span className="text-gray-600">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              {selectedService.benefits && selectedService.benefits.length > 0 && (
+                <div>
+                  <h4 className="font-bold text-rcs-blue mb-2">Benefits</h4>
+                  <ul className="space-y-2 mb-4 pl-5">
+                    {selectedService.benefits.map((benefit, index) => (
+                      <li key={index} className="flex items-start">
+                        <span className="text-green-500 mr-2">✓</span>
+                        <span className="text-gray-600">{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              
+              <div className="p-4 bg-gray-50 rounded-md">
+                <h4 className="font-bold text-rcs-blue mb-2">Why Choose Us for {selectedService.title}</h4>
+                <p className="text-gray-600">
+                  Our team brings years of specialized experience in {selectedService.title.toLowerCase()}. 
+                  We use industry-leading techniques and materials to ensure the highest quality results. 
+                  Our clients consistently praise our attention to detail, communication, and ability to 
+                  complete projects on time and within budget.
+                </p>
+              </div>
+              
+              <div className="flex justify-between items-center pt-4 border-t">
+                <p className="text-sm text-gray-500">
+                  Contact us for more information about our {selectedService.title.toLowerCase()} services.
+                </p>
+                <div className="flex gap-3">
+                  <Button variant="outline" onClick={() => setSelectedService(null)}>Close</Button>
+                  <Link to="/contact">
+                    <Button className="bg-rcs-blue hover:bg-blue-800">Request Quote</Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };
