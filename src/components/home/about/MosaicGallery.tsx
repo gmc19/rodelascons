@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Play } from 'lucide-react';
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
@@ -152,13 +151,16 @@ const MosaicGallery = ({ isVisible }: MosaicGalleryProps) => {
           custom={index}
           variants={mosaicVariants}
           initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
+          animate={isVisible ? [
+            "visible", 
+            // Apply wave effect separately
+            getWaveEffect(index)
+          ] : "hidden"}
           whileHover="hover"
           style={{ height: '120px' }}
-          animate={getWaveEffect(index)}
+          className={`relative overflow-hidden rounded-lg transition-all duration-300 shadow-md hover:shadow-xl hover:z-10 group ${hoveredIndex === index ? 'ring-2 ring-rcs-gold' : ''}`}
           onMouseEnter={() => setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
-          className={`relative overflow-hidden rounded-lg transition-all duration-300 shadow-md hover:shadow-xl hover:z-10 group ${hoveredIndex === index ? 'ring-2 ring-rcs-gold' : ''}`}
         >
           <HoverCard>
             <HoverCardTrigger asChild>
