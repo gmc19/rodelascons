@@ -29,17 +29,24 @@ const AboutUsSection = () => {
     };
   }, []);
 
-  // Project images for the mosaic
+  // Project images for the mosaic - expanded to 12 images with consistent naming
   const projectImages = [
     { src: "/images/projects/residential/cassasis_residential/main.jpg", alt: "Cassasis Residential" },
-    { src: "/images/projects/residential/racha_project/1.jpg", alt: "Racha Project" },
+    { src: "/images/projects/residential/racha_project/1.jpg", alt: "Racha Project Exterior" },
     { src: "/images/projects/commercial/jezelle_fashion/1.jpg", alt: "Jezelle Fashion Store" },
-    { src: "/images/projects/renovation/southforbes/1.jpg", alt: "South Forbes Renovation" },
-    { src: "/images/projects/residential/racha_project/5.jpg", alt: "Racha Project Interior" },
+    { src: "/images/projects/renovation/southforbes/1.jpg", alt: "South Forbes Exterior" },
+    { src: "/images/projects/residential/racha_project/5.jpg", alt: "Racha Living Room" },
     { src: "/images/projects/commercial/jezelle_fashion/3.jpg", alt: "Jezelle Fashion Interior" },
     { src: "/images/projects/renovation/southforbes/4.jpg", alt: "South Forbes Kitchen" },
-    { src: "/images/projects/residential/cassasis_residential/gallery2.jpg", alt: "Cassasis Residential Interior" },
-    { src: "/images/projects/residential/racha_project/9.jpg", alt: "Racha Project Detail" },
+    { src: "/images/projects/residential/cassasis_residential/gallery2.jpg", alt: "Cassasis Interior" },
+    { src: "/images/projects/residential/racha_project/9.jpg", alt: "Racha Detail" },
+    { src: "/images/projects/commercial/jezelle_fashion/5.jpg", alt: "Jezelle Display Area" },
+    { src: "/images/projects/renovation/southforbes/2.jpg", alt: "South Forbes Living" },
+    { src: "/images/projects/residential/racha_project/2.jpg", alt: "Racha Front View" },
+    { src: "/images/projects/commercial/jezelle_fashion/2.jpg", alt: "Jezelle Entrance" },
+    { src: "/images/projects/residential/racha_project/4.jpg", alt: "Racha Kitchen" },
+    { src: "/images/projects/renovation/southforbes/3.jpg", alt: "South Forbes Bathroom" },
+    { src: "/images/projects/residential/cassasis_residential/gallery3.jpg", alt: "Cassasis Detail" },
   ];
 
   return (
@@ -47,14 +54,14 @@ const AboutUsSection = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-            {/* Mosaic grid with hover effects */}
-            <div className="grid grid-cols-3 gap-2 md:gap-3 relative">
+            {/* Mosaic grid with uniform sizing and improved hover effects */}
+            <div className="grid grid-cols-4 gap-2 md:gap-2 relative">
               {projectImages.map((image, index) => (
                 <div 
                   key={index}
                   className="relative overflow-hidden rounded-lg group transition-all duration-300 shadow-md hover:shadow-xl hover:z-10 hover:scale-105"
                   style={{ 
-                    height: index % 3 === 0 ? '160px' : index % 3 === 1 ? '140px' : '120px',
+                    height: '120px', // Uniform height for all images
                     transition: 'all 0.5s ease'
                   }}
                 >
@@ -89,12 +96,13 @@ const AboutUsSection = () => {
                   </HoverCard>
                 </div>
               ))}
-              {/* Experience badge overlapping the mosaic */}
-              <div className="absolute -bottom-6 -right-6 bg-rcs-gold p-6 shadow-lg rounded-lg py-5 z-20">
-                <div className="text-rcs-blue font-montserrat">
-                  <div className="text-4xl font-bold">13+</div>
-                  <div className="font-medium">Years of Excellence</div>
-                </div>
+            </div>
+            
+            {/* Years of Excellence badge - separated from the mosaic and aligned with text */}
+            <div className="mt-8 bg-rcs-gold p-6 shadow-lg rounded-lg text-center w-full">
+              <div className="text-rcs-blue font-montserrat">
+                <div className="text-4xl font-bold">13+</div>
+                <div className="font-medium">Years of Excellence</div>
               </div>
             </div>
           </div>
