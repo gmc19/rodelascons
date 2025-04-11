@@ -37,7 +37,13 @@ const projects: Project[] = [
     title: "Cassasis Residential Building",
     category: "Residential",
     image: "/images/projects/residential/cassasis_residential/main.jpg"
-  }
+  },
+  {
+    id: "ayala-alabang",
+    title: "Ayala Alabang 2-Storey Residential Build",
+    category: "Residential",
+    image: "/images/projects/residential/ayala/a.jpg"
+  },
 ];
 
 interface ProjectCardProps {
@@ -47,7 +53,18 @@ interface ProjectCardProps {
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, delay }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+
+  // Validate image path to prevent malicious URLs
+  const validateImagePath = (path: string): string => {
+    // Only allow local images from the /images directory
+    if (path.startsWith('/images/') && !path.includes('..')) {
+      return path;
+    }
+    // Return a default image if validation fails
+    return '/images/fallback-image.svg';
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -72,6 +89,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, delay }) => {
     };
   }, [delay]);
 
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
   return (
     <motion.div
       ref={cardRef}
@@ -82,9 +103,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, delay }) => {
     >
       <div className="aspect-[4/3] overflow-hidden">
         <img 
-          src={project.image} 
+          src={imageError ? '/images/fallback-image.svg' : validateImagePath(project.image)} 
           alt={project.title} 
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          onError={handleImageError}
+          loading="lazy"
         />
       </div>
       
@@ -110,6 +133,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, delay }) => {
 };
 
 const ProjectShowcase = () => {
+  // Validate image path to prevent malicious URLs
+  const validateImagePath = (path: string): string => {
+    // Only allow local images from the /images directory
+    if (path.startsWith('/images/') && !path.includes('..')) {
+      return path;
+    }
+    // Return a default image if validation fails
+    return '/images/fallback-image.svg';
+  };
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = '/images/fallback-image.svg';
+  };
+
   return (
     <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4 md:px-6">
@@ -130,9 +167,11 @@ const ProjectShowcase = () => {
                       <div key={project.id} className="group relative overflow-hidden rounded-lg shadow-lg">
                         <div className="aspect-[4/3] overflow-hidden">
                           <img 
-                            src={project.image} 
+                            src={validateImagePath(project.image)} 
                             alt={project.title} 
                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            onError={handleImageError}
+                            loading="lazy"
                           />
                         </div>
                         

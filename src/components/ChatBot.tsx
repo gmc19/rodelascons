@@ -36,8 +36,9 @@ const ChatBot = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
-  const apiKey = "AIzaSyBdGQJXvMp4BMLWPpoxCTk2U9iB5phhcz4";
-
+  // Use environment variable for API key instead of hardcoding
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY || "";
+  
   const toggleChat = () => {
     if (!isOpen) {
       setIsOpen(true);
@@ -191,7 +192,7 @@ const ChatBot = () => {
       return;
     }
 
-    // Removed the getCompanyInfo check here to prioritize LLM call
+    // Removed the getCompanyInfo check here to prioritize LLM
 
     try {
       // Prepare conversation history for the API
@@ -211,8 +212,15 @@ const ChatBot = () => {
         history.splice(history.length - 2, 1);
       }
 
+      // Secure API call with error handling and timeout
+      let timeoutId: NodeJS.Timeout;
+      const timeoutPromise = new Promise<Response>((_, reject) => {
+        timeoutId = setTimeout(() => {
+          reject(new Error("Request timed out"));
+        }, 10000); // 10 second timeout
+      });
 
-      const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent', {
+      const fetchPromise = fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -271,8 +279,12 @@ const ChatBot = () => {
         })
       });
 
+      // Clear timeout if the request completes
+      const response = await Promise.race([fetchPromise, timeoutPromise]);
+      clearTimeout(timeoutId);
+
       if (!response.ok) {
-        throw new Error('Failed to get response');
+        throw new Error(`API responded with status: ${response.status}`);
       }
 
       const data = await response.json();
@@ -282,9 +294,25 @@ const ChatBot = () => {
       // Check structure carefully before accessing parts
       if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
         botResponse = data.candidates[0].content.parts[0].text;
-        
-        // Removed aggressive length limiter
-        // Removed automatic button generation based on response keywords
+      }
+
+      // Safety check for sensitive information in response
+      const sensitivePatterns = [
+        /API[_\s]?KEY/gi,
+        /api[_\s]?key/gi,
+        /VITE_/gi,
+        /password/gi,
+        /secret/gi,
+        /credential/gi
+      ];
+      
+      // Check if response contains any sensitive information patterns
+      const containsSensitiveInfo = sensitivePatterns.some(pattern => 
+        pattern.test(botResponse)
+      );
+      
+      if (containsSensitiveInfo) {
+        botResponse = "I apologize, but I couldn't process your request safely. Please try again with a different question or contact us directly.";
       }
 
       setMessages(prev => [...prev, { 
@@ -294,7 +322,7 @@ const ChatBot = () => {
         buttons: undefined // Let the AI generate suggestions within its text response
       }]);
     } catch (error) {
-      console.error('Error fetching AI response:', error); // Log the specific error
+      console.error('Error in chat response:', error instanceof Error ? error.message : 'Unknown error'); // Log only error message, not full error object
       setMessages(prev => [...prev, { 
         content: "Sorry, may problem po. Please contact us at 09670598903 or engineeringdreams.rcs@gmail.com", 
         isBot: true, 

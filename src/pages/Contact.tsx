@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Phone, Mail, MapPin, Send } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
+import DOMPurify from 'dompurify';
+
+// Function to sanitize input to prevent XSS
+const sanitizeInput = (input: string): string => {
+  return DOMPurify.sanitize(input.trim());
+};
 
 const Contact = () => {
   const { toast } = useToast();
@@ -71,8 +77,17 @@ const Contact = () => {
     e.preventDefault();
     
     if (validateForm()) {
-      // In a real app, you would submit the form data to your backend here
-      console.log('Form submitted:', formData);
+      // Sanitize all input data before submission
+      const sanitizedData = {
+        name: sanitizeInput(formData.name),
+        email: sanitizeInput(formData.email),
+        phone: sanitizeInput(formData.phone),
+        service: sanitizeInput(formData.service),
+        message: sanitizeInput(formData.message)
+      };
+      
+      // In a real app, you would submit the sanitized data to your backend
+      console.log('Form submitted:', sanitizedData);
       
       toast({
         title: "Message Sent",
@@ -279,6 +294,7 @@ const Contact = () => {
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-2xl font-bold text-rcs-blue mb-8 text-center">Our Location</h2>
           <div className="h-96 rounded-lg overflow-hidden shadow-md">
+            {/* Primary Google Maps iframe with fallback */}
             <iframe
               title="map"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5070.085611400343!2d121.1527285760898!3d14.267298285147966!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d9c7daf0caf5%3A0xe4fafc59e87b1190!2sThe%20Brew%20Deck!5e1!3m2!1sen!2sph!4v1744209848744!5m2!1sen!2sph"
@@ -287,7 +303,51 @@ const Contact = () => {
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              onError={(e) => {
+                // If iframe fails to load, replace with a link to Google Maps
+                const target = e.target as HTMLIFrameElement;
+                const container = target.parentElement;
+                if (container) {
+                  const link = document.createElement('a');
+                  link.href = "https://www.google.com/maps?q=14.267298285147966,121.1527285760898"; // Direct link to coordinates
+                  link.target = "_blank";
+                  link.rel = "noopener noreferrer";
+                  link.className = "block w-full h-full relative";
+                  
+                  // Use a static map image as background
+                  const img = document.createElement('img');
+                  img.src = "https://maps.googleapis.com/maps/api/staticmap?center=14.267298285147966,121.1527285760898&zoom=15&size=800x600&maptype=roadmap&markers=color:red%7C14.267298285147966,121.1527285760898&key="; // No API key needed for static image
+                  img.alt = "Map to Rodelas Construction Services";
+                  img.className = "w-full h-full object-cover";
+                  
+                  // Add a button on top of the image
+                  const button = document.createElement('div');
+                  button.className = "absolute inset-0 flex items-center justify-center";
+                  button.innerHTML = '<div class="bg-rcs-blue text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-900 transition-colors">View on Google Maps</div>';
+                  
+                  link.appendChild(img);
+                  link.appendChild(button);
+                  container.innerHTML = '';
+                  container.appendChild(link);
+                }
+              }}
             ></iframe>
+          </div>
+          
+          {/* Add text directions below the map for better accessibility */}
+          <div className="mt-6 text-center text-gray-700">
+            <p>Block 8 Lot 7 Phase 2 Gregory Street, St. Joseph Village, 7 Marinig, Cabuyao, 4025 Laguna</p>
+            <p className="mt-2">
+              <a 
+                href="https://www.google.com/maps?q=14.267298285147966,121.1527285760898" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-rcs-blue hover:underline inline-flex items-center"
+              >
+                <MapPin size={16} className="mr-1" /> Get Directions
+              </a>
+            </p>
           </div>
         </div>
       </div>

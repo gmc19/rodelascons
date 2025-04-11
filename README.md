@@ -1,69 +1,94 @@
-# Welcome to your Lovable project
+# Rodelas Construction Services (RCS) Website
 
-## Project info
+## Overview
 
-**URL**: https://lovable.dev/projects/34bffa46-b28c-485f-aae7-29424d5c2740
+This is the official website for Rodelas Construction Services, a construction company specializing in commercial and residential construction, renovation, and remodeling services.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- Responsive design for all device sizes
+- Service showcase with detailed information
+- Project portfolio with filtering capabilities
+- Contact form with validation
+- Interactive AI chatbot assistant
+- Cost estimator for quick project quotes
 
-**Use Lovable**
+## Security Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/34bffa46-b28c-485f-aae7-29424d5c2740) and start prompting.
+This project implements several security best practices:
 
-Changes made via Lovable will be committed automatically to this repo.
+1. Content Security Policy (CSP) headers to prevent XSS attacks
+2. Environment variables for storing sensitive API keys
+3. Input sanitization to protect against injection attacks
+4. Image path validation to prevent path traversal
+5. Secure headers for protection against clickjacking and other attacks
 
-**Use your preferred IDE**
+## Setup Instructions
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Prerequisites
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- Node.js 16+ and npm
 
-Follow these steps:
+### Installation
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+1. Clone the repository
+   ```
+   git clone <repository-url>
+   cd rodelascons
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+2. Install dependencies
+   ```
+   npm install
+   ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+3. Create environment file
+   ```
+   cp .env.example .env.local
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+4. Edit `.env.local` and add your API keys:
+   ```
+   VITE_GEMINI_API_KEY=your-gemini-api-key
+   ```
+
+### Development
+
+Start the development server:
+```
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Production Build
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Build for production:
+```
+npm run build
+```
 
-**Use GitHub Codespaces**
+Serve the production build:
+```
+npm run serve
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Security Configuration
 
-## What technologies are used for this project?
+Please refer to the [SECURITY.md](./SECURITY.md) file for detailed information about security features implemented in this project and best practices for developers.
 
-This project is built with .
+## Project Structure
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- `/src` - Source code
+  - `/components` - Reusable UI components
+  - `/pages` - Page components
+  - `/hooks` - Custom React hooks
+  - `/lib` - Utility functions and services
 
-## How can I deploy this project?
+- `/public` - Static assets
+  - `/images` - Images used throughout the site
+    - `/projects` - Project images organized by category
+    
+- `/docs` - Documentation files
 
-Simply open [Lovable](https://lovable.dev/projects/34bffa46-b28c-485f-aae7-29424d5c2740) and click on Share -> Publish.
+## License
 
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+All rights reserved. This code is proprietary and confidential.

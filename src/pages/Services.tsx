@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useToast } from "@/hooks/use-toast";
+import DOMPurify from 'dompurify';
 
 interface ServiceProps {
   icon: React.ReactNode;
@@ -149,9 +150,26 @@ const QuickServiceRequestForm = () => {
   const [message, setMessage] = useState('');
   const { toast } = useToast();
 
+  // Function to sanitize input to prevent XSS
+  const sanitizeInput = (input: string): string => {
+    return DOMPurify.sanitize(input.trim());
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, you would submit this data to a backend
+    
+    // Sanitize all form data before submission
+    const sanitizedData = {
+      name: sanitizeInput(name),
+      email: sanitizeInput(email),
+      phone: sanitizeInput(phone),
+      serviceType: sanitizeInput(serviceType),
+      message: sanitizeInput(message)
+    };
+    
+    // In a real app, you would submit the sanitized data to a backend
+    console.log('Sanitized form data:', sanitizedData);
+    
     toast({
       title: "Request Submitted",
       description: "We'll contact you shortly about your service request.",
