@@ -1,9 +1,9 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Building, Home, PenTool, BarChart3, Info } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { DialogClose } from "@/components/ui/dialog";
 
 interface ServiceCardProps {
   icon: React.ReactNode;
@@ -75,24 +75,24 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ icon, title, description, del
       </div>
 
       <Dialog open={showDetails} onOpenChange={setShowDetails}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
+            <DialogTitle className="flex items-center gap-2 text-xl md:text-2xl">
               <span className="text-rcs-blue">{icon}</span>
               {title}
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-xs md:text-sm">
               Comprehensive details about our {title.toLowerCase()} services
             </DialogDescription>
           </DialogHeader>
           
-          <div className="space-y-4">
+          <div className="space-y-3 md:space-y-4 text-sm md:text-base pb-14 sm:pb-0">
             <p className="text-gray-600">{description}</p>
             
             {features.length > 0 && (
               <div>
-                <h4 className="font-bold text-rcs-blue mb-2">Key Features</h4>
-                <ul className="space-y-2 mb-4 pl-5">
+                <h4 className="font-bold text-rcs-blue mb-1 md:mb-2 text-base md:text-lg">Key Features</h4>
+                <ul className="space-y-1 md:space-y-2 mb-3 md:mb-4 pl-3 md:pl-5">
                   {features.map((feature, index) => (
                     <li key={index} className="flex items-start">
                       <span className="text-rcs-gold mr-2">•</span>
@@ -105,8 +105,8 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ icon, title, description, del
             
             {benefits && benefits.length > 0 && (
               <div>
-                <h4 className="font-bold text-rcs-blue mb-2">Benefits</h4>
-                <ul className="space-y-2 mb-4 pl-5">
+                <h4 className="font-bold text-rcs-blue mb-1 md:mb-2 text-base md:text-lg">Benefits</h4>
+                <ul className="space-y-1 md:space-y-2 mb-3 md:mb-4 pl-3 md:pl-5">
                   {benefits.map((benefit, index) => (
                     <li key={index} className="flex items-start">
                       <span className="text-green-500 mr-2">✓</span>
@@ -117,28 +117,25 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ icon, title, description, del
               </div>
             )}
             
-            <div className="p-4 bg-gray-50 rounded-md">
-              <h4 className="font-bold text-rcs-blue mb-2">Why Choose Us for {title}</h4>
-              <p className="text-gray-600">
+            <div className="p-3 md:p-4 bg-gray-50 rounded-md">
+              <h4 className="font-bold text-rcs-blue mb-1 md:mb-2 text-base md:text-lg">Why Choose Us for {title}</h4>
+              <p className="text-gray-600 text-sm md:text-base">
                 Our team brings years of specialized experience in {title.toLowerCase()}. 
                 We use industry-leading techniques and materials to ensure the highest quality results. 
-                Our clients consistently praise our attention to detail, communication, and ability to 
-                complete projects on time and within budget.
+                Our clients consistently praise our attention to detail and ability to complete projects on time.
               </p>
             </div>
             
-            <div className="flex justify-end items-center pt-4 border-t">
-              <div className="flex gap-3">
-                <Button 
-                  variant="outline" 
-                  onClick={() => setShowDetails(false)}
-                >
-                  Close
-                </Button>
+            <div className="fixed bottom-0 left-0 right-0 sm:relative sm:bottom-auto bg-white pt-3 border-t flex flex-col sm:flex-row justify-between items-center gap-2 px-6 sm:px-0">
+              <p className="text-xs md:text-sm text-gray-500 order-2 sm:order-1">
+                Contact us for more information about our {title.toLowerCase()} services.
+              </p>
+              <div className="flex gap-2 md:gap-3 w-full sm:w-auto justify-center sm:justify-end order-1 sm:order-2">
+                <DialogClose asChild>
+                  <Button variant="outline" className="px-3 md:px-4 py-1 md:py-2 text-sm">Close</Button>
+                </DialogClose>
                 <Link to="/services">
-                  <Button className="bg-rcs-blue hover:bg-blue-800">
-                    View All Services
-                  </Button>
+                  <Button className="bg-rcs-blue hover:bg-blue-800 px-3 md:px-4 py-1 md:py-2 text-sm">View Services</Button>
                 </Link>
               </div>
             </div>

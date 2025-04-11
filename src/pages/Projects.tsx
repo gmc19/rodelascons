@@ -129,14 +129,38 @@ const projects: Project[] = [
     image: "https://images.unsplash.com/photo-1616832880334-b1904551ccdd?auto=format&fit=crop&w=800&q=80",
     galleryImages: ["https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1616401784845-180882ba9ba8?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1598257006463-7c64a5bb0928?auto=format&fit=crop&w=800&q=80"]
   }, {
-    id: "project-5",
-    title: "Corporate Headquarters",
-    category: "Commercial",
-    location: "Tech Valley, CA",
-    completionDate: "November 2022",
-    description: "A modern corporate headquarters for a leading tech company, featuring innovative design, collaborative spaces, and cutting-edge technology integration. This project showcases our ability to create inspiring work environments.",
-    image: "https://images.unsplash.com/photo-1545079968-1feb95494244?auto=format&fit=crop&w=800&q=80",
-    galleryImages: ["https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1497366858526-0766cadbe8fa?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?auto=format&fit=crop&w=800&q=80"]
+    id: "ayala-alabang-residential",
+    title: "Ayala Alabang – 2-Storey Residential Build",
+    category: "Residential",
+    location: "Ayala Alabang",
+    completionDate: "2021",
+    description: "We're proud to share the completion of a two-storey residential building located in the prestigious Ayala, Alabang area. This project combined elegant design with functionality, featuring high-end finishes and modern interiors that reflect the client's refined taste.",
+    image: "/images/projects/residential/ayala/a.jpg",
+    galleryImages: [
+      "/images/projects/residential/ayala/b.jpg",
+      "/images/projects/residential/ayala/c.jpg",
+      "/images/projects/residential/ayala/d.jpg",
+      "/images/projects/residential/ayala/e.jpg",
+      "/images/projects/residential/ayala/f.jpg",
+      "/images/projects/residential/ayala/g.jpg",
+      "/images/projects/residential/ayala/h.jpg",
+      "/images/projects/residential/ayala/i.jpg",
+      "/images/projects/residential/ayala/j.jpg"
+    ],
+    features: [
+      { title: "Full Construction", description: "Full construction and finishing of a 2-storey residence" },
+      { title: "Custom Cabinetry", description: "Custom cabinetry and lighting throughout the home" },
+      { title: "Modern Installations", description: "Modern kitchen and bathroom installations" },
+      { title: "Ceiling Treatments", description: "Elegant ceiling treatments and lighting fixtures" },
+      { title: "Turnkey Completion", description: "Turnover-ready completion with attention to detail" }
+    ],
+    highlights: [
+      "Luxurious and livable home design",
+      "High-end finishes and materials",
+      "Architectural excellence",
+      "Interior styling and detailing"
+    ],
+    tags: ["Residential", "High-End Residential", "New Build", "Luxury Home"]
   }, {
 
     id: "south-forbes-villas",
@@ -378,8 +402,8 @@ const Projects = () => {
                           
                           <Tabs value={activeSectionTab} onValueChange={setActiveSectionTab} className="w-full">
                             <TabsList className="grid w-full grid-cols-3 mb-6 md:mb-8">
-                              <TabsTrigger value="gallery" className="text-sm md:text-lg">Project Gallery</TabsTrigger>
-                              <TabsTrigger value="details" className="text-sm md:text-lg">Project Details</TabsTrigger>
+                              <TabsTrigger value="gallery" className="text-sm md:text-lg">Gallery</TabsTrigger>
+                              <TabsTrigger value="details" className="text-sm md:text-lg">Details</TabsTrigger>
                                 <TabsTrigger value="features" className="text-sm md:text-lg">Features</TabsTrigger>
                             </TabsList>
                             

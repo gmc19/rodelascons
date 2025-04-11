@@ -184,7 +184,7 @@ const Contact = () => {
                     className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-rcs-blue ${
                       errors.name ? 'border-red-500' : 'border-gray-300'
                     }`}
-                    placeholder="John Doe"
+                    placeholder="Full Name"
                   />
                   {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
                 </div>
@@ -202,7 +202,7 @@ const Contact = () => {
                     className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-rcs-blue ${
                       errors.email ? 'border-red-500' : 'border-gray-300'
                     }`}
-                    placeholder="john@example.com"
+                    placeholder="Email Address"
                   />
                   {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
                 </div>
@@ -218,7 +218,7 @@ const Contact = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rcs-blue"
-                    placeholder="(123) 456-7890"
+                    placeholder="Phone Number"
                   />
                 </div>
                 

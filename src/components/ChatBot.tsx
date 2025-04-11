@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, Send, X, Minimize, Maximize, Phone, Mail, MapPin, Info, Calculator } from 'lucide-react';
+import { MessageSquare, Send, X, Minimize, Maximize, Phone, Mail, MapPin, Info, Calculator, MessageCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import { useNavigate } from 'react-router-dom';
 
@@ -33,6 +33,7 @@ const ChatBot = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatBoxRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
   const apiKey = "AIzaSyBdGQJXvMp4BMLWPpoxCTk2U9iB5phhcz4";
@@ -41,8 +42,18 @@ const ChatBot = () => {
     if (!isOpen) {
       setIsOpen(true);
       setIsMinimized(false);
+      // Focus input field when chat is opened
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
     } else {
       setIsMinimized(!isMinimized);
+      if (!isMinimized) {
+        // Focus input field when chat is maximized
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 100);
+      }
     }
   };
 
@@ -312,59 +323,83 @@ const ChatBot = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [messages]);
+    
+    // Auto-focus input after messages update (when bot responds)
+    if (isOpen && !isMinimized && messages.length > 0 && messages[messages.length - 1].isBot) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+    }
+  }, [messages, isLoading, isOpen, isMinimized]);
 
   return (
     <>
       <button
         onClick={toggleChat}
-        className={`fixed bottom-6 right-6 z-40 bg-rcs-blue text-white rounded-full p-4 shadow-lg hover:bg-blue-800 transition-all duration-300 flex items-center justify-center gap-2 ${
+        className={`fixed bottom-6 right-6 z-40 bg-rcs-blue text-white rounded-full p-4 shadow-xl hover:bg-blue-800 transition-all duration-300 flex items-center justify-center gap-2 ${
           isOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'
-        } hover:scale-105`}
+        } hover:scale-105 group animate-pulse-slow`}
         aria-label="Open chat"
       >
-        <MessageSquare className="h-6 w-6" />
-        <span className="hidden md:inline text-sm font-medium">Chat with us</span>
+        <div className="relative">
+          <MessageCircle className="h-6 w-6" />
+          <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-white"></span>
+        </div>
+        <span className="hidden md:inline text-sm font-medium group-hover:translate-x-0.5 transition-transform">Chat with us</span>
       </button>
 
       <div
         ref={chatBoxRef}
-        className={`fixed z-50 bottom-0 md:bottom-6 right-0 md:right-6 bg-white rounded-lg shadow-xl transition-all duration-300 overflow-hidden flex flex-col ${
-          isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-0 pointer-events-none'
-        } ${isMinimized ? 'h-[60px] md:w-[300px]' : 'h-[80vh] md:h-[600px] w-full md:w-[400px]'} max-w-[100vw] md:max-w-[95vw]`}
+        className={`fixed z-50 bottom-0 md:bottom-6 right-0 md:right-6 bg-white rounded-t-lg md:rounded-lg shadow-2xl transition-all duration-300 overflow-hidden flex flex-col ${
+          isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+        } ${isMinimized ? 'h-auto md:w-[320px]' : 'h-[80vh] md:h-[600px] w-full md:w-[400px]'} max-w-[100vw] md:max-w-[95vw] border border-gray-200 md:border-opacity-50`}
       >
-        <div className="bg-rcs-blue text-white p-4 flex items-center justify-between shadow-md">
-          <div className="flex items-center">
-            <div className="bg-white p-2 rounded-full mr-3">
-              <MessageSquare className="h-5 w-5 text-rcs-blue" />
+        <div className="bg-gradient-to-r from-rcs-blue to-blue-700 text-white p-5 flex items-center justify-between shadow-md relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-full opacity-10">
+            <div className="absolute top-0 left-0 w-20 h-20 bg-white rounded-full -ml-10 -mt-10"></div>
+            <div className="absolute bottom-0 right-0 w-16 h-16 bg-white rounded-full -mr-8 -mb-8"></div>
+          </div>
+          <div className="flex items-center relative z-10">
+            <div className="bg-white p-2.5 rounded-full mr-3 shadow-md group-hover:rotate-12 transition-all duration-300">
+              <MessageCircle className="h-5 w-5 text-rcs-blue" />
             </div>
             <div>
-              <h3 className="font-semibold text-sm md:text-base">RCS Assistant</h3>
-              {!isMinimized && (
-                <div className="flex items-center gap-1.5">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <p className="text-xs text-gray-100">Online | Ready to help</p>
-                </div>
-              )}
+              <h3 className="font-semibold text-sm md:text-base mb-1">RCS Assistant</h3>
+              <div className="flex items-center gap-1.5 mt-0.5">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <p className="text-xs text-gray-100">{isMinimized ? "Online" : "Online | Ready to help"}</p>
+              </div>
             </div>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 relative z-10">
             <button 
               onClick={toggleChat} 
-              className="hover:bg-blue-800 rounded p-1.5 transition-colors"
+              className="hover:bg-white/20 rounded-full p-1.5 transition-colors"
               aria-label={isMinimized ? "Maximize chat" : "Minimize chat"}
             >
               {isMinimized ? <Maximize size={16} /> : <Minimize size={16} />}
             </button>
             <button 
               onClick={closeChat} 
-              className="hover:bg-blue-800 rounded p-1.5 transition-colors"
+              className="hover:bg-white/20 rounded-full p-1.5 transition-colors"
               aria-label="Close chat"
             >
               <X size={16} />
             </button>
           </div>
         </div>
+
+        {isMinimized && messages.length > 0 && (
+          <div className="px-4 py-4 bg-gray-50 border-t border-gray-100 text-gray-600 text-sm overflow-hidden whitespace-nowrap text-ellipsis max-w-full flex items-center">
+            <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
+            <div className="overflow-hidden text-ellipsis">
+              {messages[messages.length - 1].content.length > 40 
+                ? `${messages[messages.length - 1].content.substring(0, 40)}...` 
+                : messages[messages.length - 1].content
+              }
+            </div>
+          </div>
+        )}
 
         {!isMinimized && (
           <div className="flex-grow p-4 overflow-y-auto bg-gray-50">
@@ -441,6 +476,8 @@ const ChatBot = () => {
                 placeholder="Type your message..."
                 className="flex-grow border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-rcs-blue text-base bg-gray-50"
                 disabled={isLoading}
+                ref={inputRef}
+                autoFocus
               />
               <button
                 type="submit"

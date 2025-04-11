@@ -73,23 +73,23 @@ const ServiceCard: React.FC<ServiceProps> = ({ icon, title, description, feature
       </div>
 
       <Dialog open={showDetails} onOpenChange={setShowDetails}>
-        <DialogContent className="max-w-3xl">
+        <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
+            <DialogTitle className="flex items-center gap-2 text-xl md:text-2xl">
               <span className="text-rcs-blue">{icon}</span>
               {title}
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-xs md:text-sm">
               Comprehensive details about our {title.toLowerCase()} services
             </DialogDescription>
           </DialogHeader>
           
-          <div className="space-y-4">
+          <div className="space-y-3 md:space-y-4 text-sm md:text-base pb-14 sm:pb-0">
             <p className="text-gray-600">{description}</p>
             
             <div>
-              <h4 className="font-bold text-rcs-blue mb-2">Key Features</h4>
-              <ul className="space-y-2 mb-4 pl-5">
+              <h4 className="font-bold text-rcs-blue mb-1 md:mb-2 text-base md:text-lg">Key Features</h4>
+              <ul className="space-y-1 md:space-y-2 mb-3 md:mb-4 pl-3 md:pl-5">
                 {features.map((feature, index) => (
                   <li key={index} className="flex items-start">
                     <span className="text-rcs-gold mr-2">•</span>
@@ -101,8 +101,8 @@ const ServiceCard: React.FC<ServiceProps> = ({ icon, title, description, feature
             
             {benefits && benefits.length > 0 && (
               <div>
-                <h4 className="font-bold text-rcs-blue mb-2">Benefits</h4>
-                <ul className="space-y-2 mb-4 pl-5">
+                <h4 className="font-bold text-rcs-blue mb-1 md:mb-2 text-base md:text-lg">Benefits</h4>
+                <ul className="space-y-1 md:space-y-2 mb-3 md:mb-4 pl-3 md:pl-5">
                   {benefits.map((benefit, index) => (
                     <li key={index} className="flex items-start">
                       <span className="text-green-500 mr-2">✓</span>
@@ -113,9 +113,9 @@ const ServiceCard: React.FC<ServiceProps> = ({ icon, title, description, feature
               </div>
             )}
             
-            <div className="p-4 bg-gray-50 rounded-md">
-              <h4 className="font-bold text-rcs-blue mb-2">Why Choose Us for {title}</h4>
-              <p className="text-gray-600">
+            <div className="p-3 md:p-4 bg-gray-50 rounded-md">
+              <h4 className="font-bold text-rcs-blue mb-1 md:mb-2 text-base md:text-lg">Why Choose Us for {title}</h4>
+              <p className="text-gray-600 text-sm md:text-base">
                 Our team brings years of specialized experience in {title.toLowerCase()}. 
                 We use industry-leading techniques and materials to ensure the highest quality results. 
                 Our clients consistently praise our attention to detail, communication, and ability to 
@@ -123,14 +123,14 @@ const ServiceCard: React.FC<ServiceProps> = ({ icon, title, description, feature
               </p>
             </div>
             
-            <div className="flex justify-between items-center pt-4 border-t">
-              <p className="text-sm text-gray-500">
+            <div className="fixed bottom-0 left-0 right-0 sm:relative sm:bottom-auto bg-white pt-3 border-t flex flex-col sm:flex-row justify-between items-center gap-2 px-6 sm:px-0">
+              <p className="text-xs md:text-sm text-gray-500 order-2 sm:order-1">
                 Contact us for more information about our {title.toLowerCase()} services.
               </p>
-              <div className="flex gap-3">
-                <Button variant="outline" onClick={() => setShowDetails(false)}>Close</Button>
+              <div className="flex gap-2 md:gap-3 w-full sm:w-auto justify-center sm:justify-end order-1 sm:order-2">
+                <Button variant="outline" onClick={() => setShowDetails(false)} className="px-3 md:px-4 py-1 md:py-2 text-sm">Close</Button>
                 <Link to="/contact">
-                  <Button className="bg-rcs-blue hover:bg-blue-800">Request Quote</Button>
+                  <Button className="bg-rcs-blue hover:bg-blue-800 px-3 md:px-4 py-1 md:py-2 text-sm">Request Quote</Button>
                 </Link>
               </div>
             </div>
@@ -393,23 +393,23 @@ const RelatedServices = ({ currentCategory, services }: { currentCategory: strin
       
       {selectedService && (
         <Dialog open={!!selectedService} onOpenChange={() => setSelectedService(null)}>
-          <DialogContent className="max-w-3xl">
+          <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle className="flex items-center gap-2">
+              <DialogTitle className="flex items-center gap-2 text-xl md:text-2xl">
                 <span className="text-rcs-blue">{selectedService.icon}</span>
                 {selectedService.title}
               </DialogTitle>
-              <DialogDescription>
+              <DialogDescription className="text-xs md:text-sm">
                 Comprehensive details about our {selectedService.title.toLowerCase()} services
               </DialogDescription>
             </DialogHeader>
             
-            <div className="space-y-4">
+            <div className="space-y-3 md:space-y-4 text-sm md:text-base pb-14 sm:pb-0">
               <p className="text-gray-600">{selectedService.description}</p>
               
               <div>
-                <h4 className="font-bold text-rcs-blue mb-2">Key Features</h4>
-                <ul className="space-y-2 mb-4 pl-5">
+                <h4 className="font-bold text-rcs-blue mb-1 md:mb-2 text-base md:text-lg">Key Features</h4>
+                <ul className="space-y-1 md:space-y-2 mb-3 md:mb-4 pl-3 md:pl-5">
                   {selectedService.features.map((feature, index) => (
                     <li key={index} className="flex items-start">
                       <span className="text-rcs-gold mr-2">•</span>
@@ -421,8 +421,8 @@ const RelatedServices = ({ currentCategory, services }: { currentCategory: strin
               
               {selectedService.benefits && selectedService.benefits.length > 0 && (
                 <div>
-                  <h4 className="font-bold text-rcs-blue mb-2">Benefits</h4>
-                  <ul className="space-y-2 mb-4 pl-5">
+                  <h4 className="font-bold text-rcs-blue mb-1 md:mb-2 text-base md:text-lg">Benefits</h4>
+                  <ul className="space-y-1 md:space-y-2 mb-3 md:mb-4 pl-3 md:pl-5">
                     {selectedService.benefits.map((benefit, index) => (
                       <li key={index} className="flex items-start">
                         <span className="text-green-500 mr-2">✓</span>
@@ -433,9 +433,9 @@ const RelatedServices = ({ currentCategory, services }: { currentCategory: strin
                 </div>
               )}
               
-              <div className="p-4 bg-gray-50 rounded-md">
-                <h4 className="font-bold text-rcs-blue mb-2">Why Choose Us for {selectedService.title}</h4>
-                <p className="text-gray-600">
+              <div className="p-3 md:p-4 bg-gray-50 rounded-md">
+                <h4 className="font-bold text-rcs-blue mb-1 md:mb-2 text-base md:text-lg">Why Choose Us for {selectedService.title}</h4>
+                <p className="text-gray-600 text-sm md:text-base">
                   Our team brings years of specialized experience in {selectedService.title.toLowerCase()}. 
                   We use industry-leading techniques and materials to ensure the highest quality results. 
                   Our clients consistently praise our attention to detail, communication, and ability to 
@@ -443,14 +443,14 @@ const RelatedServices = ({ currentCategory, services }: { currentCategory: strin
                 </p>
               </div>
               
-              <div className="flex justify-between items-center pt-4 border-t">
-                <p className="text-sm text-gray-500">
+              <div className="fixed bottom-0 left-0 right-0 sm:relative sm:bottom-auto bg-white pt-3 border-t flex flex-col sm:flex-row justify-between items-center gap-2 px-6 sm:px-0">
+                <p className="text-xs md:text-sm text-gray-500 order-2 sm:order-1">
                   Contact us for more information about our {selectedService.title.toLowerCase()} services.
                 </p>
-                <div className="flex gap-3">
-                  <Button variant="outline" onClick={() => setSelectedService(null)}>Close</Button>
+                <div className="flex gap-2 md:gap-3 w-full sm:w-auto justify-center sm:justify-end order-1 sm:order-2">
+                  <Button variant="outline" onClick={() => setSelectedService(null)} className="px-3 md:px-4 py-1 md:py-2 text-sm">Close</Button>
                   <Link to="/contact">
-                    <Button className="bg-rcs-blue hover:bg-blue-800">Request Quote</Button>
+                    <Button className="bg-rcs-blue hover:bg-blue-800 px-3 md:px-4 py-1 md:py-2 text-sm">Request Quote</Button>
                   </Link>
                 </div>
               </div>
@@ -464,23 +464,23 @@ const RelatedServices = ({ currentCategory, services }: { currentCategory: strin
 
 const ServiceDetails = ({ service }: { service: ServiceProps }) => {
   return (
-    <DialogContent className="max-w-3xl">
+    <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
       <DialogHeader>
-        <DialogTitle className="flex items-center gap-2">
+        <DialogTitle className="flex items-center gap-2 text-xl md:text-2xl">
           <span className="text-rcs-blue">{service.icon}</span>
           {service.title}
         </DialogTitle>
-        <DialogDescription>
+        <DialogDescription className="text-xs md:text-sm">
           Comprehensive details about our {service.title.toLowerCase()} services
         </DialogDescription>
       </DialogHeader>
       
-      <div className="space-y-4">
+      <div className="space-y-3 md:space-y-4 text-sm md:text-base pb-14 sm:pb-0">
         <p className="text-gray-600">{service.description}</p>
         
         <div>
-          <h4 className="font-bold text-rcs-blue mb-2">Key Features</h4>
-          <ul className="space-y-2 mb-4 pl-5">
+          <h4 className="font-bold text-rcs-blue mb-1 md:mb-2 text-base md:text-lg">Key Features</h4>
+          <ul className="space-y-1 md:space-y-2 mb-3 md:mb-4 pl-3 md:pl-5">
             {service.features.map((feature, index) => (
               <li key={index} className="flex items-start">
                 <span className="text-rcs-gold mr-2">•</span>
@@ -492,8 +492,8 @@ const ServiceDetails = ({ service }: { service: ServiceProps }) => {
         
         {service.benefits && service.benefits.length > 0 && (
           <div>
-            <h4 className="font-bold text-rcs-blue mb-2">Benefits</h4>
-            <ul className="space-y-2 mb-4 pl-5">
+            <h4 className="font-bold text-rcs-blue mb-1 md:mb-2 text-base md:text-lg">Benefits</h4>
+            <ul className="space-y-1 md:space-y-2 mb-3 md:mb-4 pl-3 md:pl-5">
               {service.benefits.map((benefit, index) => (
                 <li key={index} className="flex items-start">
                   <span className="text-green-500 mr-2">✓</span>
@@ -504,9 +504,9 @@ const ServiceDetails = ({ service }: { service: ServiceProps }) => {
           </div>
         )}
         
-        <div className="p-4 bg-gray-50 rounded-md">
-          <h4 className="font-bold text-rcs-blue mb-2">Why Choose Us for {service.title}</h4>
-          <p className="text-gray-600">
+        <div className="p-3 md:p-4 bg-gray-50 rounded-md">
+          <h4 className="font-bold text-rcs-blue mb-1 md:mb-2 text-base md:text-lg">Why Choose Us for {service.title}</h4>
+          <p className="text-gray-600 text-sm md:text-base">
             Our team brings years of specialized experience in {service.title.toLowerCase()}. 
             We use industry-leading techniques and materials to ensure the highest quality results. 
             Our clients consistently praise our attention to detail, communication, and ability to 
@@ -514,16 +514,16 @@ const ServiceDetails = ({ service }: { service: ServiceProps }) => {
           </p>
         </div>
         
-        <div className="flex justify-between items-center pt-4 border-t">
-          <p className="text-sm text-gray-500">
+        <div className="fixed bottom-0 left-0 right-0 sm:relative sm:bottom-auto bg-white pt-3 border-t flex flex-col sm:flex-row justify-between items-center gap-2 px-6 sm:px-0">
+          <p className="text-xs md:text-sm text-gray-500 order-2 sm:order-1">
             Contact us for more information about our {service.title.toLowerCase()} services.
           </p>
-          <div className="flex gap-3">
+          <div className="flex gap-2 md:gap-3 w-full sm:w-auto justify-center sm:justify-end order-1 sm:order-2">
             <DialogClose asChild>
-              <Button variant="outline">Close</Button>
+              <Button variant="outline" className="px-3 md:px-4 py-1 md:py-2 text-sm">Close</Button>
             </DialogClose>
             <Link to="/contact">
-              <Button className="bg-rcs-blue hover:bg-blue-800">Request Quote</Button>
+              <Button className="bg-rcs-blue hover:bg-blue-800 px-3 md:px-4 py-1 md:py-2 text-sm">Request Quote</Button>
             </Link>
           </div>
         </div>
