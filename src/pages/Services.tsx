@@ -360,7 +360,6 @@ const ServiceComparisonTable = ({ services }: { services: ServiceProps[] }) => {
 };
 
 const RelatedServices = ({ currentCategory, services }: { currentCategory: string, services: ServiceProps[] }) => {
-  // State to manage which service details to show
   const [selectedService, setSelectedService] = useState<ServiceProps | null>(null);
   
   const relatedServices = services
@@ -392,7 +391,6 @@ const RelatedServices = ({ currentCategory, services }: { currentCategory: strin
         ))}
       </div>
       
-      {/* Dialog for displaying service details */}
       {selectedService && (
         <Dialog open={!!selectedService} onOpenChange={() => setSelectedService(null)}>
           <DialogContent className="max-w-3xl">
@@ -555,6 +553,78 @@ const Services = () => {
   const services: ServiceProps[] = [
     {
       icon: <Building size={24} />,
+      title: "Commercial Construction",
+      description: "Full-service commercial construction for retail spaces, offices, and industrial facilities.",
+      features: [
+        "Custom office buildings and retail spaces",
+        "Industrial and manufacturing facilities",
+        "Healthcare and institutional buildings",
+        "Restaurant and hospitality construction"
+      ],
+      benefits: [
+        "Increased property value",
+        "Enhanced business operations and efficiency",
+        "Modern, energy-efficient facilities",
+        "Compliance with all commercial building codes"
+      ],
+      category: "commercial"
+    },
+    {
+      icon: <Home size={24} />,
+      title: "Residential Construction",
+      description: "Quality home building services, from custom homes to multi-family residential projects.",
+      features: [
+        "Custom home design and construction",
+        "Multi-family residential projects",
+        "Residential community development",
+        "Luxury home construction"
+      ],
+      benefits: [
+        "Personalized living spaces tailored to your needs",
+        "Energy-efficient designs that reduce utility costs",
+        "Quality craftsmanship that stands the test of time",
+        "Modern amenities that enhance comfort and convenience"
+      ],
+      category: "residential"
+    },
+    {
+      icon: <PenTool size={24} />,
+      title: "Renovation & Remodeling",
+      description: "Transform your existing spaces with our expert renovation and remodeling services.",
+      features: [
+        "Kitchen and bathroom renovations",
+        "Office and commercial space remodeling",
+        "Home additions and expansions",
+        "Historic building restoration"
+      ],
+      benefits: [
+        "Breathe new life into outdated spaces",
+        "Increase property value and marketability",
+        "Improve functionality and flow of spaces",
+        "Incorporate modern amenities while preserving character"
+      ],
+      category: "specialized"
+    },
+    {
+      icon: <BarChart3 size={24} />,
+      title: "Construction Management",
+      description: "Professional management of your construction project from start to finish.",
+      features: [
+        "Project planning and scheduling",
+        "Budget development and management",
+        "Quality control and assurance",
+        "Risk assessment and mitigation"
+      ],
+      benefits: [
+        "Reduced project delays and cost overruns",
+        "Single point of accountability",
+        "Improved communication between all parties",
+        "Expert handling of complex project requirements"
+      ],
+      category: "management"
+    },
+    {
+      icon: <Building size={24} />,
       title: "House Construction",
       description: "Complete construction services for residential properties, including 2-storey houses in premium locations like South Forbes, Silang Cavite. We handle everything from foundation to finishing touches.",
       features: [
@@ -571,7 +641,7 @@ const Services = () => {
         "Comprehensive warranty",
         "After-construction support"
       ],
-      category: "construction"
+      category: "residential"
     },
     {
       icon: <Wrench size={24} />,
@@ -591,7 +661,7 @@ const Services = () => {
         "Durable finishes",
         "Maintenance guidance"
       ],
-      category: "finishing"
+      category: "specialized"
     },
     {
       icon: <HardHat size={24} />,
@@ -611,7 +681,7 @@ const Services = () => {
         "Professional finishing",
         "Code compliance"
       ],
-      category: "construction"
+      category: "commercial"
     },
     {
       icon: <Ruler size={24} />,
@@ -631,7 +701,7 @@ const Services = () => {
         "Design flexibility",
         "Low maintenance"
       ],
-      category: "construction"
+      category: "commercial"
     },
     {
       icon: <Home size={24} />,
@@ -651,7 +721,7 @@ const Services = () => {
         "Energy efficiency",
         "Custom solutions"
       ],
-      category: "renovation"
+      category: "specialized"
     },
     {
       icon: <PenTool size={24} />,
@@ -671,7 +741,7 @@ const Services = () => {
         "Professional application",
         "Clean work environment"
       ],
-      category: "finishing"
+      category: "specialized"
     },
     {
       icon: <BarChart3 size={24} />,
@@ -691,7 +761,7 @@ const Services = () => {
         "Better comfort",
         "Health benefits"
       ],
-      category: "mechanical"
+      category: "specialized"
     },
     {
       icon: <Wrench size={24} />,
@@ -711,7 +781,7 @@ const Services = () => {
         "Professional installation",
         "24/7 emergency service"
       ],
-      category: "mechanical"
+      category: "specialized"
     },
     {
       icon: <HardHat size={24} />,
@@ -731,7 +801,7 @@ const Services = () => {
         "Site preparation",
         "Minimal disruption"
       ],
-      category: "demolition"
+      category: "specialized"
     },
     {
       icon: <BarChart3 size={24} />,
@@ -751,7 +821,7 @@ const Services = () => {
         "Reliable power supply",
         "Professional maintenance"
       ],
-      category: "electrical"
+      category: "specialized"
     },
     {
       icon: <BarChart3 size={24} />,
@@ -771,7 +841,47 @@ const Services = () => {
         "Professional service",
         "Extended system life"
       ],
-      category: "mechanical"
+      category: "specialized"
+    },
+    {
+      icon: <Building size={24} />,
+      title: "Project Planning",
+      description: "Comprehensive project planning services to ensure your construction project starts on the right foundation.",
+      features: [
+        "Site analysis and feasibility studies",
+        "Budget planning and cost estimation",
+        "Timeline development",
+        "Resource allocation",
+        "Risk assessment"
+      ],
+      benefits: [
+        "Clear project roadmap",
+        "Optimized resource utilization",
+        "Early identification of potential issues",
+        "Realistic budget expectations",
+        "Better decision-making"
+      ],
+      category: "management"
+    },
+    {
+      icon: <BarChart3 size={24} />,
+      title: "Quality Assurance",
+      description: "Rigorous quality control and assurance services to maintain the highest standards throughout your construction project.",
+      features: [
+        "Materials testing and inspection",
+        "Workmanship evaluation",
+        "Code compliance verification",
+        "Regular quality audits",
+        "Documentation and reporting"
+      ],
+      benefits: [
+        "Consistent quality standards",
+        "Reduced rework and corrections",
+        "Compliance with regulations",
+        "Long-term durability",
+        "Better return on investment"
+      ],
+      category: "management"
     }
   ];
 

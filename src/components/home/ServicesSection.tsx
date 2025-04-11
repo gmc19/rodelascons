@@ -12,6 +12,7 @@ interface ServiceCardProps {
   delay: number;
   features?: string[];
   benefits?: string[];
+  category?: string;
 }
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ icon, title, description, delay, features = [], benefits = [] }) => {
@@ -221,6 +222,7 @@ const ServicesSection = () => {
             delay={100}
             features={serviceFeatures["Commercial Construction"]}
             benefits={serviceBenefits["Commercial Construction"]}
+            category="commercial"
           />
           <ServiceCard
             icon={<Home size={32} />}
@@ -229,6 +231,7 @@ const ServicesSection = () => {
             delay={200}
             features={serviceFeatures["Residential Construction"]}
             benefits={serviceBenefits["Residential Construction"]}
+            category="residential"
           />
           <ServiceCard
             icon={<PenTool size={32} />}
@@ -237,6 +240,7 @@ const ServicesSection = () => {
             delay={300}
             features={serviceFeatures["Renovation & Remodeling"]}
             benefits={serviceBenefits["Renovation & Remodeling"]}
+            category="specialized"
           />
           <ServiceCard
             icon={<BarChart3 size={32} />}
@@ -245,6 +249,7 @@ const ServicesSection = () => {
             delay={400}
             features={serviceFeatures["Construction Management"]}
             benefits={serviceBenefits["Construction Management"]}
+            category="management"
           />
         </div>
 
