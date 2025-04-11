@@ -135,7 +135,7 @@ const AboutUsSection = () => {
   };
   
   // Animation for the wave effect on hover
-  const waveAnimation = (index: number) => {
+  const getWaveEffect = (index: number) => {
     if (hoveredIndex === null) return {};
     
     const distance = Math.abs(hoveredIndex - index);
@@ -148,7 +148,10 @@ const AboutUsSection = () => {
     
     return {
       scale: scaleEffect,
-      transition: { delay, duration: 0.3 }
+      transition: {
+        delay,
+        duration: 0.3
+      }
     };
   };
   
@@ -186,10 +189,8 @@ const AboutUsSection = () => {
                     initial="hidden"
                     animate={isVisible ? "visible" : "hidden"}
                     whileHover="hover"
-                    style={{
-                      ...waveAnimation(index),
-                      height: '120px'
-                    }}
+                    style={{ height: '120px' }}
+                    animate={getWaveEffect(index)}
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
                     className={`relative overflow-hidden rounded-lg transition-all duration-300 shadow-md hover:shadow-xl hover:z-10 group ${hoveredIndex === index ? 'ring-2 ring-rcs-gold' : ''}`}
