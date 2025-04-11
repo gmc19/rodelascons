@@ -186,11 +186,13 @@ const AboutUsSection = () => {
                     initial="hidden"
                     animate={isVisible ? "visible" : "hidden"}
                     whileHover="hover"
-                    animate={waveAnimation(index)}
+                    style={{
+                      ...waveAnimation(index),
+                      height: '120px'
+                    }}
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
                     className={`relative overflow-hidden rounded-lg transition-all duration-300 shadow-md hover:shadow-xl hover:z-10 group ${hoveredIndex === index ? 'ring-2 ring-rcs-gold' : ''}`}
-                    style={{ height: '120px' }}
                   >
                     <HoverCard>
                       <HoverCardTrigger asChild>
