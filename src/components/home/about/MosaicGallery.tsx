@@ -18,7 +18,6 @@ interface MosaicGalleryProps {
 const MosaicGallery = ({ isVisible }: MosaicGalleryProps) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   
-  // Project images for the mosaic - expanded to 16 images with consistent naming
   const projectImages = [{
     src: "/images/projects/residential/cassasis_residential/main.jpg",
     alt: "Cassasis Residential",
@@ -101,7 +100,6 @@ const MosaicGallery = ({ isVisible }: MosaicGalleryProps) => {
     description: "Fine architectural detailing showcasing precision"
   }];
 
-  // Animation variants for mosaic items
   const mosaicVariants = {
     hidden: { opacity: 0, scale: 0.8 },
     visible: (i: number) => ({
@@ -120,12 +118,11 @@ const MosaicGallery = ({ isVisible }: MosaicGalleryProps) => {
     }
   };
   
-  // Animation for the wave effect on hover
   const getWaveEffect = (index: number) => {
     if (hoveredIndex === null) return {};
     
     const distance = Math.abs(hoveredIndex - index);
-    const maxDistance = 3; // How far the wave effect reaches
+    const maxDistance = 3;
     
     if (distance > maxDistance) return { scale: 1 };
     
@@ -140,6 +137,22 @@ const MosaicGallery = ({ isVisible }: MosaicGalleryProps) => {
       }
     };
   };
+
+  const getCombinedAnimation = (index: number) => {
+    if (!isVisible) return "hidden";
+    
+    const baseAnimation = mosaicVariants.visible(index);
+    
+    if (hoveredIndex !== null) {
+      const waveEffect = getWaveEffect(index);
+      return {
+        ...baseAnimation,
+        ...waveEffect
+      };
+    }
+    
+    return baseAnimation;
+  };
   
   return (
     <div 
@@ -151,11 +164,7 @@ const MosaicGallery = ({ isVisible }: MosaicGalleryProps) => {
           custom={index}
           variants={mosaicVariants}
           initial="hidden"
-          animate={isVisible ? [
-            "visible", 
-            // Apply wave effect separately
-            getWaveEffect(index)
-          ] : "hidden"}
+          animate={getCombinedAnimation(index)}
           whileHover="hover"
           style={{ height: '120px' }}
           className={`relative overflow-hidden rounded-lg transition-all duration-300 shadow-md hover:shadow-xl hover:z-10 group ${hoveredIndex === index ? 'ring-2 ring-rcs-gold' : ''}`}
