@@ -17,22 +17,80 @@ const Index = () => {
     window.scrollTo(0, 0);
   }, []);
   
+  // Page transition variants
+  const pageVariants = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
+    exit: { opacity: 0, transition: { duration: 0.4 } }
+  };
+  
+  // Staggered content sections
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.2,
+        delayChildren: 0.3
+      }
+    }
+  };
+  
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.6 }
+    }
+  };
+  
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={pageVariants}
     >
       <HeroSection />
-      <AboutUsSection />
-      <ServicesSection />
-      <WhyChooseUs />
-      <ProjectShowcase />
-      <TeamSection />
-      <TestimonialsSection />
-      <FaqSection />
-      <CtaSection />
+      
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div variants={sectionVariants}>
+          <AboutUsSection />
+        </motion.div>
+        
+        <motion.div variants={sectionVariants}>
+          <ServicesSection />
+        </motion.div>
+        
+        <motion.div variants={sectionVariants}>
+          <WhyChooseUs />
+        </motion.div>
+        
+        <motion.div variants={sectionVariants}>
+          <ProjectShowcase />
+        </motion.div>
+        
+        <motion.div variants={sectionVariants}>
+          <TeamSection />
+        </motion.div>
+        
+        <motion.div variants={sectionVariants}>
+          <TestimonialsSection />
+        </motion.div>
+        
+        <motion.div variants={sectionVariants}>
+          <FaqSection />
+        </motion.div>
+        
+        <motion.div variants={sectionVariants}>
+          <CtaSection />
+        </motion.div>
+      </motion.div>
     </motion.div>
   );
 };
